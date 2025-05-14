@@ -9,7 +9,7 @@
     body {
       background: url("{{ url_for('static', filename='backgrounds/conversion.jpg')}}") no-repeat center center fixed;
       background-size: cover;
-      color: #fff;
+      color: #000; /* Dark text to contrast against light grey background */
       min-height: 100vh;
       display: flex;
       flex-direction: column;
@@ -29,6 +29,7 @@
       padding: 1rem;
       text-align: center;
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+      color: #fff;
     }
 
     header h1 {
@@ -58,11 +59,13 @@
 
     main {
       flex: 1;
-      background-color: rgba(0, 0, 0, 0.6);
+      background-color: rgba(245, 245, 245, 0.95); /* Light grey with slight transparency */
+      color: #000; /* Ensure text is readable */
       padding: 2rem;
       border-radius: 12px;
       margin: 2rem auto;
       max-width: 1000px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     }
   </style>
 </head>
