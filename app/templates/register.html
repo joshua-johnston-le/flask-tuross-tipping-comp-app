@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Register - Tuross Tipping Comp</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    body {
+      background: url('https://i.imgur.com/EeQbkBZ.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: #fff;
+    }
+
+    header {
+      background-color: rgba(0, 0, 0, 0.8);
+      padding: 1rem;
+      text-align: center;
+      color: white;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
+    }
+
+    header h1 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      margin: 0;
+    }
+
+    .register-container {
+      max-width: 420px;
+      margin: auto;
+      background-color: rgba(0, 0, 0, 0.8);
+      padding: 2rem;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+    }
+
+    .form-control {
+      background-color: rgba(255, 255, 255, 0.9);
+      border: none;
+      padding: 0.75rem;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+    }
+
+    .form-control:focus {
+      border: 2px solid #0dcaf0;
+      box-shadow: none;
+    }
+
+    .btn-register {
+      width: 100%;
+      background-color: #007bff;
+      border: none;
+      font-weight: bold;
+      padding: 0.75rem;
+      border-radius: 8px;
+    }
+
+    .btn-register:hover {
+      background-color: #0056b3;
+    }
+
+    .btn-login-link {
+      display: inline-block;
+      margin-top: 1rem;
+      color: #0dcaf0;
+    }
+
+    .alert {
+      margin-top: 1rem;
+    }
+
+    a {
+      color: #0dcaf0;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1rem;
+      margin-top: 2rem;
+      background-color: rgba(0, 0, 0, 0.8);
+      color: #bbb;
+      font-size: 0.9rem;
+      position: relative;
+      bottom: 0;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Tuross Tipping Comp</h1>
+  </header>
+
+  <main class="d-flex justify-content-center align-items-center min-vh-100 flex-column">
+    <div class="register-container">
+      <h2 class="text-center mb-4">Register</h2>
+
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          {% for category, message in messages %}
+            <div class="alert alert-{{ category }} text-center">
+              {{ message }}
+            </div>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+
+      <form method="POST">
+        <input type="text" id="username" name="username" class="form-control" placeholder="Username" required />
+
+        <input type="password" id="password" name="password" class="form-control" placeholder="Password" required />
+
+        <button type="submit" class="btn btn-register">Register</button>
+      </form>
+
+      <p class="text-center mt-4">
+        Already have an account?
+        <a href="{{ url_for('auth.login') }}" class="btn-login-link">Login here</a>.
+      </p>
+    </div>
+  </main>
+
+  <footer>
+    &copy; {{ current_year or "2025" }} Tuross Tipping Comp | Built with ❤️ for the fans
+  </footer>
+</body>
+</html>

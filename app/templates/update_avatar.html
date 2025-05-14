@@ -1,0 +1,103 @@
+<form method="POST" action="{{ url_for('profile.update_avatar') }}">
+  <div id="avatarCarousel" class="carousel slide mb-4" data-bs-ride="carousel">
+    <div class="carousel-inner">
+      {% for avatar in avatars %}
+      <div class="carousel-item {% if loop.first %}active{% endif %}">
+        <img
+          src="{{ url_for('static', filename='avatars/' + avatar) }}"
+          class="d-block w-100"
+          data-filename="{{ avatar }}"
+          alt="{{ avatar }}"
+        />
+        <div class="avatar-label">{{ avatar }}</div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <button
+      class="carousel-control-prev"
+      type="button"
+      data-bs-target="#avatarCarousel"
+      data-bs-slide="prev"
+    >
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button
+      class="carousel-control-next"
+      type="button"
+      data-bs-target="#avatarCarousel"
+      data-bs-slide="next"
+    >
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+
+  <button
+    type="submit"
+    class="btn btn-primary btn-lg"
+    id="confirm-btn"
+    disabled
+  >
+    Confirm Choice
+  </button>
+</form>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const avatarInput = document.getElementById("selected-avatar");
+    const confirmBtn = document.getElementById("confirm-btn");
+    const carousel = document.getElementById("avatarCarousel");
+
+    function updateSelectedAvatar() {
+      const activeItem = carousel.querySelector(".carousel-item.active img");
+      if (activeItem) {
+        avatarInput.value = activeItem.getAttribute("data-filename");
+        confirmBtn.disabled = false;
+      }
+    }
+
+    carousel.addEventListener("slid.bs.carousel", updateSelectedAvatar);
+    updateSelectedAvatar(); // Set initial selection
+  });
+</script>
+
+<style>
+  #avatarCarousel {
+    width: 100%;
+    max-width: 6000px;
+    height: 600px;
+    margin: 0 auto;
+  }
+
+  .carousel-item {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .carousel-item img {
+    max-width: 100%;
+    max-height: 80%;
+    object-fit: contain;
+    border: 2px solid #dee2e6;
+    border-radius: 1rem;
+    background-color: white;
+    padding: 10px;
+  }
+
+  .carousel-control-prev-icon,
+  .carousel-control-next-icon {
+    background-color: #000;
+    border-radius: 50%;
+  }
+
+  .avatar-label {
+    margin-top: 15px;
+    font-weight: bold;
+    font-size: 1.25rem;
+  }
+</style>

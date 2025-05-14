@@ -1,0 +1,150 @@
+{% extends "base.html" %}
+
+{% block content %}
+<main class="container mt-5">
+    <div class="text-center mb-4">
+        <h2 class="display-6 text-black fw-bold">Round Results For {{ current_user.username }}</h2>
+
+        <table class="table table-bordered table-hover table-dark mt-3 custom-table">
+            <thead>
+                <tr>
+                    <th>Round</th>
+                    <th>Successful Tips</th>
+                    <th>Failed Tips</th>
+                    <th>Pending Tips</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in round_data %}
+                <tr>
+                    <td>{{ row.round_number }}</td>
+                    <td>{{ row.total_success }}</td>
+                    <td>{{ row.total_failure }}</td>
+                    <td>{{ row.total_pending }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <h2 class="display-6 text-black fw-bold mt-4">Leaderboard</h2>
+
+        <table class="table table-bordered table-hover table-dark mt-3 custom-table">
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>Username</th>
+                    <th>Successful Tips</th>
+                    <th>Failed Tips</th>
+                    <th>Pending Tips</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in leaderboard_data %}
+                <tr {% if current_user.username == row.username %}class="table-success"{% endif %}>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ row.username }}</td>
+                    <td>{{ row.total_success }}</td>
+                    <td>{{ row.total_failure }}</td>
+                    <td>{{ row.total_pending }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</main>
+{% endblock %}
+
+{% block styles %}
+<style>
+    body {
+        background-image: url("https://images.unsplash.com/photo-1565058528608-0901f1dcba3d");
+        background-size: cover;
+        background-position: center;
+        color: #fff;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
+
+    main {
+        flex: 1;
+        background-color: rgba(0, 0, 0, 0.6);
+        padding: 2rem;
+        border-radius: 12px;
+        margin: 2rem auto;
+        max-width: 1000px;
+    }
+
+    footer {
+        background-color: rgba(255, 255, 255, 0.8);
+        padding: 1rem;
+        text-align: center;
+        color: #000;
+        font-weight: bold;
+    }
+
+    .btn-group-custom .btn {
+        margin: 0.25rem;
+        min-width: 120px;
+        transition: all 0.3s ease;
+    }
+
+    .btn-group-custom .btn:hover {
+        background-color: #0dcaf0;
+        color: #000;
+        transform: scale(1.05);
+    }
+
+    .custom-table th, .custom-table td {
+        text-align: center;
+        padding: 1rem;
+    }
+
+    .custom-table th {
+        background-color: #343a40;
+        color: white;
+        font-weight: bold;
+    }
+
+    .custom-table tbody tr:nth-child(even) {
+        background-color: #f8f9fa;
+    }
+
+    .custom-table tbody tr:nth-child(odd) {
+        background-color: #e9ecef;
+    }
+
+    .table-success {
+        background-color: #28a745 !important;
+        color: white;
+        font-weight: bold;
+    }
+
+    .custom-table td {
+        font-size: 1rem;
+        color: #495057;
+    }
+
+    .table-hover tbody tr:hover {
+        background-color: #d6e6f2;
+    }
+
+    .nrl-logo {
+        position: absolute;
+        top: 70px;
+        right: 200px;
+        width: 150px;
+        height: auto;
+        z-index: 10;
+    }
+
+    .nrl-logo2 {
+        position: absolute;
+        top: 70px;
+        left: 200px;
+        width: 150px;
+        height: auto;
+        z-index: 10;
+    }
+</style>
+{% endblock %}

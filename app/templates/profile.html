@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+  <h2 class="mb-4">Your Profile</h2>
+
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs mb-3" id="profileTabs" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active" id="details-tab" data-bs-toggle="tab" data-bs-target="#details" type="button" role="tab">
+        Profile Details
+      </button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="password-tab" data-bs-toggle="tab" data-bs-target="#password" type="button" role="tab">
+        Update Password
+      </button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="avatar-tab" data-bs-toggle="tab" data-bs-target="#avatar" type="button" role="tab">
+        Change User Avatar
+      </button>
+    </li>
+  </ul>
+
+  <!-- Tab content -->
+  <div class="tab-content">
+    <div class="tab-pane fade show active" id="details" role="tabpanel">
+      <h5>Profile Details</h5>
+      <p><strong>Email:</strong> {{ current_user.email }}</p>
+      <p><strong>Username:</strong> {{ current_user.username }}</p>
+      <!-- Add other profile details as needed -->
+    </div>
+
+    <div class="tab-pane fade" id="password" role="tabpanel">
+      {% include "update_password.html" %}
+    </div>
+
+    <div class="tab-pane fade" id="avatar" role="tabpanel">
+      {% include "update_avatar.html" %}
+    </div>
+  </div>
+</div>
+
+<!-- Ensure Bootstrap JS is available -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+{% endblock %}

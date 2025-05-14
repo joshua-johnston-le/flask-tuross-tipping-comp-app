@@ -1,0 +1,62 @@
+from flask import Blueprint, render_template, redirect, url_for, request, flash
+from flask_login import login_required, current_user
+from werkzeug.security import check_password_hash, generate_password_hash
+from werkzeug.utils import secure_filename
+from app import db
+from app.models import User  # Assuming your User model is here
+import os
+
+profile_bp = Blueprint('profile', __name__)
+
+@profile_bp.route('/profile', methods=['GET','POST'])
+@login_required
+def profile():
+    return render_template("profile.html")
+
+@profile_bp.route('/update_password', methods=['POST'])
+@login_required
+def update_password():
+    if request.method == 'POST':
+        current_password = request.form.get('current_password')
+        new_password = request.form.get('new_password')
+        confirm_password = request.form.get('confirm_password')
+
+        # Check if current password matches
+        if not check_password_hash(current_user.password, current_password):
+            flash('Current password is incorrect', 'danger')
+            return redirect(url_for('profile'))
+
+        # Validate new password and confirm password match
+        if new_password != confirm_password:
+            flash('New passwords do not match', 'danger')
+            return redirect(url_for('profile'))
+
+        # Update password
+        current_user.password = generate_password_hash(new_password)
+        db.session.commit()
+        flash('Password updated successfully', 'success')
+        return redirect(url_for('profile'))
+
+    return render_template('profile.html')
+
+AVATAR_LIST = [
+    'borat.png',
+    'chicken.jpg'
+]
+
+@profile_bp.route('/update_avatar', methods=['POST'])
+@login_required
+def update_avatar():
+    avatar_folder = os.path.join(app.static, 'avatars')
+    avatars = sorted([f for f in os.listdir(avatar_folder) if f.endswith(('.png', '.jpg', '.jpeg'))])
+    if request.method == 'POST':
+        selected_avatar = request.form.get('avatar')
+        if selected_avatar and selected_avatar in avatars:
+            current_user.avatar = secure_filename(selected_avatar)
+            db.session.commit()
+            flash('Avatar updated!', 'success')
+            return redirect(url_for('profile'))  # Adjust to your profile route
+        else:
+            flash('Invalid avatar selected.', 'danger')
+
+    return render_template('profile.html', avatars=avatars)

@@ -1,0 +1,13 @@
+body {
+    font-family: Arial, sans-serif;
+    padding: 100px;
+}
+header {
+    margin-bottom: 20px;
+}
+nav a {
+    margin-right: 15px;
+}
+.visible-heading {
+    color: #000;
+}

@@ -1,0 +1,113 @@
+Running cron job: upserting NRL fixtures...
+Done.
+Running cron job: updating tip results...
+Done.
+Initialising Cron Job at: 2025-05-08 18:00:01.294264+10:00
+Running cron job: upserting NRL fixtures...
+Done.
+Running cron job: updating tip results...
+Done.
+Traceback (most recent call last):
+  File "/Users/joshuajohnston/Projects/tuross_tipping_comp/run_fixture_cron.py", line 22, in <module>
+    run()
+  File "/Users/joshuajohnston/Projects/tuross_tipping_comp/run_fixture_cron.py", line 11, in run
+    app = create_app()
+          ^^^^^^^^^^^^
+  File "/Users/joshuajohnston/Projects/tuross_tipping_comp/app/__init__.py", line 39, in create_app
+    app.register_blueprint(leaderboard_bp)
+  File "/Users/joshuajohnston/Projects/tuross_tipping_comp/.venv/lib/python3.12/site-packages/flask/sansio/scaffold.py", line 47, in wrapper_func
+    return f(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/joshuajohnston/Projects/tuross_tipping_comp/.venv/lib/python3.12/site-packages/flask/sansio/app.py", line 595, in register_blueprint
+    blueprint.register(self, options)
+  File "/Users/joshuajohnston/Projects/tuross_tipping_comp/.venv/lib/python3.12/site-packages/flask/sansio/blueprints.py", line 335, in register
+    deferred(state)
+  File "/Users/joshuajohnston/Projects/tuross_tipping_comp/.venv/lib/python3.12/site-packages/flask/sansio/blueprints.py", line 434, in <lambda>
+    lambda s: s.add_url_rule(
+              ^^^^^^^^^^^^^^^
+  File "/Users/joshuajohnston/Projects/tuross_tipping_comp/.venv/lib/python3.12/site-packages/flask/sansio/blueprints.py", line 110, in add_url_rule
+    self.app.add_url_rule(
+  File "/Users/joshuajohnston/Projects/tuross_tipping_comp/.venv/lib/python3.12/site-packages/flask/sansio/scaffold.py", line 47, in wrapper_func
+    return f(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/joshuajohnston/Projects/tuross_tipping_comp/.venv/lib/python3.12/site-packages/flask/sansio/app.py", line 650, in add_url_rule
+    rule_obj = self.url_rule_class(rule, methods=methods, **options)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/joshuajohnston/Projects/tuross_tipping_comp/.venv/lib/python3.12/site-packages/werkzeug/routing/rules.py", line 475, in __init__
+    raise ValueError(f"URL rule '{string}' must start with a slash.")
+ValueError: URL rule 'leaderboard' must start with a slash.
+Initialising Cron Job at: 2025-05-09 18:00:01.066372+10:00
+Running cron job: upserting NRL fixtures...
+Done.
+Running cron job: updating tip results...
+Done.
+Initialising Cron Job at: 2025-05-10 21:00:01.616603+10:00
+Running cron job: upserting NRL fixtures...
+Done.
+Running cron job: updating tip results...
+Done.
+Initialising Cron Job at: 2025-05-11 12:00:01.307086+10:00
+Running cron job: upserting NRL fixtures...
+Done.
+Running cron job: updating tip results...
+Done.
+Initialising Cron Job at: 2025-05-11 13:00:00.931359+10:00
+Running cron job: upserting NRL fixtures...
+Done.
+Running cron job: updating tip results...
+Done.
+Initialising Cron Job at: 2025-05-11 14:00:01.632381+10:00
+Running cron job: upserting NRL fixtures...
+Done.
+Running cron job: updating tip results...
+Done.
+Initialising Cron Job at: 2025-05-11 15:00:01.367160+10:00
+Running cron job: upserting NRL fixtures...
+Done.
+Running cron job: updating tip results...
+Done.
+Initialising Cron Job at: 2025-05-11 16:00:00.818706+10:00
+Running cron job: upserting NRL fixtures...
+Done.
+Running cron job: updating tip results...
+Done.
+Initialising Cron Job at: 2025-05-11 17:00:01.627592+10:00
+Running cron job: upserting NRL fixtures...
+Done.
+Running cron job: updating tip results...
+Done.
+Initialising Cron Job at: 2025-05-11 19:00:01.832733+10:00
+Running cron job: upserting NRL fixtures...
+Done.
+Running cron job: updating tip results...
+Done.
+Initialising Cron Job at: 2025-05-11 20:00:01.685765+10:00
+Running cron job: upserting NRL fixtures...
+Done.
+Running cron job: updating tip results...
+Done.
+Initialising Cron Job at: 2025-05-11 21:00:01.355122+10:00
+Running cron job: upserting NRL fixtures...
+Done.
+Running cron job: updating tip results...
+Done.
+Initialising Cron Job at: 2025-05-11 22:00:01.255916+10:00
+Running cron job: upserting NRL fixtures...
+Done.
+Running cron job: updating tip results...
+Done.
+Initialising Cron Job at: 2025-05-12 17:00:01.268875+10:00
+Running cron job: upserting NRL fixtures...
+Done.
+Running cron job: updating tip results...
+Done.
+Initialising Cron Job at: 2025-05-12 22:00:01.473805+10:00
+Running cron job: upserting NRL fixtures...
+Done.
+Running cron job: updating tip results...
+Done.
+Initialising Cron Job at: 2025-05-14 14:00:01.342545+10:00
+Running cron job: upserting NRL fixtures...
+Done.
+Running cron job: updating tip results...
+Done.

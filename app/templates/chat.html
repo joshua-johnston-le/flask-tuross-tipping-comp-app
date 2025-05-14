@@ -1,0 +1,203 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+  .chat-container {
+    max-width: 800px;
+    margin: auto;
+  }
+
+  .chat-header, .chat-tips, .chat-box, .chat-input {
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fafafa;
+  }
+
+  .chat-message {
+    margin-bottom: 10px;
+  }
+
+  .chat-message strong {
+    color: #333;
+  }
+
+  .chat-input input[type="text"] {
+    width: 75%;
+    padding: 8px;
+  }
+
+  .chat-input button {
+    padding: 8px 12px;
+  }
+
+  select {
+    padding: 5px;
+    margin-left: 10px;
+  }
+
+  .match-selector, .match-summary {
+    background-color: #2f2f2f;  /* dark grey */
+    color: white;               /* text color */
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+  }
+
+  /* Chat box styling */
+  .chat-box {
+    background-color: #f1f1f1;  /* light grey */
+    color: black;
+    padding: 1rem;
+    border-radius: 8px;
+    height: 300px;
+    overflow-y: scroll;
+    margin-bottom: 1rem;
+  }
+
+  /* Message input area */
+  .chat-input {
+    width: 100%;
+    padding: 0.5rem;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    margin-bottom: 0.5rem;
+  }
+
+  .send-button {
+    padding: 0.5rem 1rem;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .send-button:hover {
+    background-color: #0056b3;
+  }
+</style>
+
+<div class="chat-container">
+
+  <!-- Match Selector -->
+  <div class="match-selector">
+    <form method="get" action="{{ url_for('chat.chat') }}">
+      <label for="match_id">Select Match:</label>
+      <select name="match_id" id="match_id" onchange="this.form.submit()">
+        {% for match in matches %}
+          <option value="{{ match.id }}" {% if selected_match and match.id == selected_match.id %}selected{% endif %}>
+            {{ match.home_team }} vs {{ match.away_team }} - {{ match.time.strftime('%A %I:%M %p') }}
+          </option>
+        {% endfor %}
+      </select>
+    </form>
+  </div>
+
+  <!-- Tipping Summary -->
+  {% if selected_match %}
+    <div class="match-summary">
+      <h4>{{ selected_match.home_team }} vs {{ selected_match.away_team }}</h4>
+      <p><strong>Kickoff:</strong> {{ selected_match.time.strftime('%A %I:%M %p') }} (UTC)</p>
+      <div style="display: flex; justify-content: space-between;">
+        <div>
+          <strong>Tipped {{ selected_match.home_team }}:</strong>
+          <ul>
+            {% for user in tipped_users.get(selected_match.home_team, []) %}
+              <li>{{ user }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+        <div>
+          <strong>Tipped {{ selected_match.away_team }}:</strong>
+          <ul>
+            {% for user in tipped_users.get(selected_match.away_team, []) %}
+              <li>{{ user }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+
+  <!-- Chat Box -->
+  <div class="chat-box" id="chat-box">
+    {% for msg in chat_messages %}
+      <div class="chat-message">
+        <strong>{{ msg.user.username }}</strong> [{{ msg.timestamp.strftime('%H:%M') }}]: {{ msg.message }}
+      </div>
+    {% endfor %}
+  </div>
+
+  <!-- Chat Input -->
+  {% if chat_open %}
+    <div class="chat-input">
+      <form id="chat-form">
+        <input type="hidden" name="match_id" value="{{ selected_match.id }}">
+        <input type="text" name="message" id="message" placeholder="Type your message..." required>
+        <button type="submit">Send</button>
+      </form>
+    </div>
+  {% else %}
+    <div style="background-color: #2f2f2f; color: white; padding: 1rem; border-radius: 8px; margin-top: 1rem;">
+      <p><em>Chat is closed. It opens 30 minutes before kickoff and closes at midnight.</em></p>
+    </div>
+  {% endif %}
+
+</div>
+
+<!-- JavaScript for sending and polling messages -->
+<script>
+  const chatBox = document.getElementById("chat-box");
+  const form = document.getElementById("chat-form");
+  const matchId = "{{ selected_match.id if selected_match else '' }}";
+
+  function scrollChatToBottom() {
+    chatBox.scrollTop = chatBox.scrollHeight;
+  }
+
+  function loadMessages() {
+    fetch(`/chat/messages?match_id=${matchId}`)
+      .then(response => response.json())
+      .then(data => {
+        if (data.messages) {
+          chatBox.innerHTML = "";
+          data.messages.forEach(msg => {
+            const div = document.createElement("div");
+            div.classList.add("chat-message");
+            div.innerHTML = `<strong>${msg.username}</strong> [${msg.timestamp}]: ${msg.message}`;
+            chatBox.appendChild(div);
+          });
+          scrollChatToBottom();
+        }
+      });
+  }
+
+  if (form) {
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      const formData = new FormData(form);
+      fetch("{{ url_for('chat.post_message') }}", {
+        method: "POST",
+        body: formData
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.message) {
+            loadMessages();
+            form.reset();
+          } else if (data.error) {
+            alert(data.error);
+          }
+        });
+    });
+  }
+
+  // Auto-poll messages every 5 seconds
+  setInterval(loadMessages, 5000);
+  scrollChatToBottom();
+</script>
+
+{% endblock %}
+
