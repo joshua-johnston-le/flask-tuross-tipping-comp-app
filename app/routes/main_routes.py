@@ -15,7 +15,7 @@ def home():
     round_number = find_current_round()
     fixtures = FixtureFree.query.filter_by(round=round_number).order_by(FixtureFree.date).all()
     match_ids = [f.match_id for f in fixtures]
-    print("HERE!!!!", match_ids)
+    rank = None
     tips = []
     if current_user.is_authenticated:
         rank = get_user_rank(current_user.id)
