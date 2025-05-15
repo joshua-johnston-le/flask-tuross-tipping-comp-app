@@ -63,7 +63,7 @@
                   <img src="{{ team_logos[fixture.home_team] }}" 
                        class="team-logo" 
                        alt="{{ fixture.home_team }}" 
-                       data-match="{{ fixture.id }}" 
+                       data-match="{{ fixture.match_id }}" 
                        data-team="{{ fixture.home_team }}">
 
                   <span>vs</span>
@@ -72,11 +72,11 @@
                   <img src="{{ team_logos[fixture.away_team] }}" 
                        class="team-logo" 
                        alt="{{ fixture.away_team }}" 
-                       data-match="{{ fixture.id }}" 
+                       data-match="{{ fixture.match_id }}" 
                        data-team="{{ fixture.away_team }}">
                 </div>
 
-                <input type="hidden" name="team-input-{{ fixture.id }}" id="team-input-{{ fixture.id }}">
+                <input type="hidden" name="team-input-{{ fixture.match_id }}" id="team-input-{{ fixture.match_id }}">
               </div>
             </div>
           {% endfor %}
