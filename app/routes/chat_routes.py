@@ -37,7 +37,7 @@ def chat():
 
     tipped_users = {}
     if selected_match:
-        tips = Tip.query.filter_by(match=selected_match.id).all()
+        tips = Tip.query.filter_by(match=selected_match.match_id).all()
         for tip in tips:
             user = User.query.get(tip.user_id)
             if user:
