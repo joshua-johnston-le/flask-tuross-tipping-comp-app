@@ -13,7 +13,7 @@ main_bp = Blueprint('main', __name__)
 def home():
     round_number = find_current_round()
     fixtures = FixtureFree.query.filter_by(round=round_number).order_by(FixtureFree.date).all()
-    match_ids = [f.id for f in fixtures]
+    match_ids = [f.match_id for f in fixtures]
     tips = []
     if current_user.is_authenticated:
         tips = Tip.query.filter(Tip.user_id==current_user.id, Tip.match.in_(match_ids)).all()
