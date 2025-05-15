@@ -135,7 +135,7 @@
   {% if chat_open %}
     <div class="chat-input">
       <form id="chat-form">
-        <input type="hidden" name="match_id" value="{{ selected_match.id }}">
+        <input type="hidden" name="match_id" value="{{ selected_match.match_id }}">
         <input type="text" name="message" id="message" placeholder="Type your message..." required>
         <button type="submit">Send</button>
       </form>
