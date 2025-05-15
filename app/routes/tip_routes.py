@@ -18,7 +18,7 @@ def submit_tip():
         FixtureFree.date <= sunday
     ).all()
     
-    match_ids = [f.id for f in fixtures]  # ✅ FIXED: use f.id not f.match_id
+    match_ids = [f.match_id for f in fixtures]  # ✅ FIXED: use f.id not f.match_id
     
     existing_tips = Tip.query.filter(Tip.user_id == current_user.id, Tip.match.in_(match_ids)).all()
     has_submitted = len(existing_tips) == len(match_ids)
