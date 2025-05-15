@@ -115,27 +115,27 @@ def get_user_round_results(user_id, round_number):
 # --- New Function to Update UserTipStats ---
 def update_user_tip_stats():
     users = User.query.all()
-    
-    #Delete existing table
-    UserTipStats.query.delete()
-    db.session.commit()
-    
-    for user in users:
-        for round_number in range(9, find_current_round()+1):  # Replace 10 with current round + 1
-            stat = UserTipStats.query.filter_by(user_id=user.id, round_number=round_number).first()
-            round_results = get_user_round_results(user.id, round_number)
-            
-            # Insert new row with zeroed stats
-            stat = UserTipStats(
-                user_id=user.id,
-                round_number=round_number,
-                successful_tips=round_results["success"],
-                failed_tips=round_results["failure"],
-                pending_tips=round_results["pending"]
-            )
-            db.session.add(stat)
-    db.session.commit()
 
+    for user in users:
+        for round_number in range(1, find_current_round() + 1):  # Start from round 1
+            round_results = get_user_round_results(user.id, round_number)
+
+            stat = UserTipStats.query.filter_by(user_id=user.id, round_number=round_number).first()
+            if stat:
+                stat.successful_tips = round_results["success"]
+                stat.failed_tips = round_results["failure"]
+                stat.pending_tips = round_results["pending"]
+            else:
+                stat = UserTipStats(
+                    user_id=user.id,
+                    round_number=round_number,
+                    successful_tips=round_results["success"],
+                    failed_tips=round_results["failure"],
+                    pending_tips=round_results["pending"]
+                )
+                db.session.add(stat)
+    db.session.commit()
+    
 # --- Main function to run all tasks ---
 def main():
     app = create_app()
