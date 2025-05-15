@@ -90,7 +90,7 @@ def find_current_round():
 #Helper function to evaluate user round results
 def get_user_round_results(user_id, round_number):
     fixtures = FixtureFree.query.filter_by(round=round_number).all()
-    match_ids = [f.id for f in fixtures]
+    match_ids = [f.match_id for f in fixtures]
     tips = Tip.query.filter(Tip.user_id==user_id, Tip.match.in_(match_ids)).all()
     
     tip_map = {tip.match: tip.selected_team for tip in tips}
