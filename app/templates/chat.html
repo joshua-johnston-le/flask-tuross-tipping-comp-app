@@ -87,13 +87,14 @@
       <label for="match_id">Select Match:</label>
       <select name="match_id" id="match_id" onchange="this.form.submit()">
         {% for match in matches %}
-          <option value="{{ match.id }}" {% if selected_match and match.id == selected_match.id %}selected{% endif %}>
+          <option value="{{ match.match_id }}" {% if selected_match and match.match_id == selected_match.match_id %}selected{% endif %}>
             {{ match.home_team }} vs {{ match.away_team }} - {{ match.time.strftime('%A %I:%M %p') }}
           </option>
         {% endfor %}
       </select>
     </form>
   </div>
+  
 
   <!-- Tipping Summary -->
   {% if selected_match %}
