@@ -21,7 +21,7 @@ def home():
         tips = Tip.query.filter(Tip.user_id==current_user.id, Tip.match.in_(match_ids)).all()
     tip_map = {tip.match: tip.selected_team for tip in tips}
     result_map = {tip.match: FixtureFree.get_winning_team(tip.match) for tip in tips}
-    rank = get_user_rank(current_user.user_id)
+    rank = get_user_rank(current_user.id)
     return render_template('home.html', tips=tips, tip_map=tip_map, result_map=result_map, round_number=round_number, fixtures=fixtures, team_logos=TEAM_LOGOS, current_year=datetime.now().year, rank=rank)
 
 @main_bp.route('/logout')
