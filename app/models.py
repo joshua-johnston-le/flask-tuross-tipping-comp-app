@@ -7,10 +7,12 @@ import pytz
 au_tz = pytz.timezone("Australia/Sydney")
 
 class User(UserMixin, db.Model):
+    __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(150), unique=True, nullable=False)
     password_hash = db.Column(db.String(150), nullable=False)
     avatar = db.Column(db.String(120), nullable=False, default="default.jpg")
+    is_admin = db.Column(db.Boolean, default=False)
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
