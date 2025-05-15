@@ -178,7 +178,7 @@
           <div class="text-white">
             <div class="fw-bold">Hello, {{ current_user.username }} 👋</div>
             <div>
-              Rank: {{ current_user.rank if current_user.rank is defined else
+              Rank: {{ rank if rank is not none else
               "Unranked" }}
             </div>
           </div>
