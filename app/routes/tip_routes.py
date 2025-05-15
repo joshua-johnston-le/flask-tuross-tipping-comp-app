@@ -29,7 +29,7 @@ def submit_tip():
             return redirect(url_for('main.home'))
 
         for fixture in fixtures:
-            match_id = fixture.id
+            match_id = fixture.match_id
             selected_team = request.form.get(f'team-input-{match_id}')  # ✅ Correct name
 
             if not selected_team:
