@@ -248,7 +248,7 @@
               <img
                 src="{{ team_logos[fixture.home_team] }}"
                 alt="{{ fixture.home_team }} logo"
-                class="team-logo {% if tip_map[fixture.id] == fixture.home_team %}selected-team{% endif %}"
+                class="team-logo {% if tip_map[fixture.match_id] == fixture.home_team %}selected-team{% endif %}"
               />
               <span class="team-box home-color mt-2"
                 >{{ fixture.home_team }}</span
@@ -262,7 +262,7 @@
               <img
                 src="{{ team_logos[fixture.away_team] }}"
                 alt="{{ fixture.away_team }} logo"
-                class="team-logo {% if tip_map[fixture.id] == fixture.away_team %}selected-team{% endif %}"
+                class="team-logo {% if tip_map[fixture.match_id] == fixture.away_team %}selected-team{% endif %}"
               />
               <span class="team-box away-color mt-2"
                 >{{ fixture.away_team }}</span
@@ -314,7 +314,7 @@
                 class="btn btn-sm btn-outline-secondary mt-2 align-self-md-end"
                 type="button"
                 data-bs-toggle="collapse"
-                data-bs-target="#details-{{ fixture.id }}"
+                data-bs-target="#details-{{ fixture.match_id }}"
               >
                 Match Details
               </button>
@@ -322,7 +322,7 @@
           </div>
         </div>
 
-        <div class="collapse mt-3" id="details-{{ fixture.id }}">
+        <div class="collapse mt-3" id="details-{{ fixture.match_id }}">
           <div class="border-top pt-2">
             <p class="mb-0">
               <strong>Kickoff:</strong> {{ fixture.time.strftime("%I:%M %p") }}
