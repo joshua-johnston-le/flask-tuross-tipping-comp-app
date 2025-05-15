@@ -152,7 +152,7 @@
 <script>
   const chatBox = document.getElementById("chat-box");
   const form = document.getElementById("chat-form");
-  const matchId = "{{ selected_match.id if selected_match else '' }}";
+  const matchId = "{{ selected_match.match_id if selected_match else '' }}";
 
   function scrollChatToBottom() {
     chatBox.scrollTop = chatBox.scrollHeight;
