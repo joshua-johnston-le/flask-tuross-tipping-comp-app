@@ -1,117 +1,97 @@
-<form method="POST" action="{{ url_for('profile.update_avatar') }}">
-  <input type="hidden" name="selected_avatar" id="selected-avatar">
-  <div id="avatarCarousel" class="carousel slide mb-4" data-bs-ride="carousel">
-    <div class="carousel-inner">
-      {% for avatar in avatars %}
-      <div class="carousel-item {% if loop.first %}active{% endif %}">
-        <img
-          src="{{ url_for('static', filename='avatars/' + avatar) }}"
-          class="d-block w-100"
-          data-filename="{{ avatar }}"
-          alt="{{ avatar }}"
-        />
-        <div class="avatar-label text-center">{{ avatar.split('.')[0].capitalize() }}</div>
-      </div>
-      {% endfor %}
-    </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Your Profile</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body { background-color: #1f1f1f; color: white; }
+    .avatar-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+      gap: 20px;
+      justify-items: center;
+      padding: 10px;
+    }
+    .avatar-option {
+      border: 3px solid transparent;
+      border-radius: 1rem;
+      padding: 10px;
+      cursor: pointer;
+      transition: border-color 0.2s;
+      text-align: center;
+    }
+    .avatar-option img {
+      max-width: 100px;
+      border-radius: 50%;
+      background: white;
+    }
+    .avatar-option:hover,
+    .avatar-option.selected {
+      border-color: #0d6efd;
+    }
+    .avatar-label {
+      margin-top: 10px;
+      font-weight: bold;
+      color: white;
+    }
+  </style>
+</head>
+<body class="p-5">
 
-    <button
-      class="carousel-control-prev"
-      type="button"
-      data-bs-target="#avatarCarousel"
-      data-bs-slide="prev"
-    >
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Previous</span>
-    </button>
-    <button
-      class="carousel-control-next"
-      type="button"
-      data-bs-target="#avatarCarousel"
-      data-bs-slide="next"
-    >
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Next</span>
-    </button>
+  <h2>Your Profile</h2>
+  <p>Current avatar:</p>
+  <img src="{{ url_for('static', filename='avatars/' + current_avatar) }}" class="rounded-circle" width="100">
+
+  <br><br>
+  <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#avatarModal">Change Avatar</button>
+
+  <!-- Modal -->
+  <div class="modal fade" id="avatarModal" tabindex="-1" aria-labelledby="avatarModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content bg-dark text-white">
+        <div class="modal-header">
+          <h5 class="modal-title" id="avatarModalLabel">Select Your Avatar</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="avatar-grid">
+            {% for avatar in avatars %}
+              <div class="avatar-option" data-avatar="{{ avatar }}">
+                <img src="{{ url_for('static', filename='avatars/' + avatar) }}" alt="{{ avatar }}">
+                <div class="avatar-label">{{ avatar.split('.')[0].capitalize() }}</div>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <button
-    type="submit"
-    class="btn btn-primary btn-lg"
-    id="confirm-btn"
-    disabled
-  >
-    Confirm Choice
-  </button>
-</form>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    document.querySelectorAll('.avatar-option').forEach(option => {
+      option.addEventListener('click', () => {
+        document.querySelectorAll('.avatar-option').forEach(o => o.classList.remove('selected'));
+        option.classList.add('selected');
 
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const avatarInput = document.getElementById("selected-avatar");
-    const confirmBtn = document.getElementById("confirm-btn");
-    const carousel = document.getElementById("avatarCarousel");
+        const selectedAvatar = option.getAttribute('data-avatar');
 
-    function updateSelectedAvatar() {
-      const activeItem = carousel.querySelector(".carousel-item.active img");
-      if (activeItem) {
-        avatarInput.value = activeItem.getAttribute("data-filename");
-        confirmBtn.disabled = false;
-      }
-    }
-
-    carousel.addEventListener("slid.bs.carousel", updateSelectedAvatar);
-    updateSelectedAvatar(); // Set initial selection
-  });
-</script>
-
-<style>
-  #avatarCarousel {
-    width: 100%;
-    max-width: 500px;
-    height: auto;
-    margin: 0 auto;
-  }
-
-  .carousel-inner {
-    height: 400px;
-  }
-
-  .carousel-item {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }  
-
-  .carousel-item img {
-    max-height: 300px;
-    width: auto;
-    object-fit: contain;
-    border: 2px solid #dee2e6;
-    border-radius: 1rem;
-    background-color: white;
-    padding: 10px;
-    margin: 0 auto;
-    display: block;
-  }
-
-  .avatar-label {
-    margin-top: 15px;
-    font-weight: bold;
-    font-size: 1.25rem;
-    color: white;
-    background-color: rgba(0, 0, 0, 0.6);
-    padding: 4px 8px;
-    border-radius: 8px;
-    display: inline-block;
-    text-align: center;
-  }
-  
-
-  .carousel-control-prev-icon,
-  .carousel-control-next-icon {
-    background-color: #000;
-    border-radius: 50%;
-  }
-</style>
+        fetch("/update_avatar", {
+          method: "POST",
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ avatar: selectedAvatar })
+        })
+        .then(res => res.json())
+        .then(data => {
+          if (data.status === 'success') {
+            window.location.reload();  // Refresh to show new avatar
+          } else {
+            alert("Failed to update avatar");
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>
