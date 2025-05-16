@@ -15,6 +15,7 @@ def admin_dashboard():
 
     # Get current round (assuming you have a way to determine it)
     current_round = find_current_round()
+    print('HERE!!!!!!!!!!: ',current_round)
     if not current_round:
         return render_template("admin.html", round_data=None)
 
