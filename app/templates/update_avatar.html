@@ -1,4 +1,5 @@
 <form method="POST" action="{{ url_for('profile.update_avatar') }}">
+  <input type="hidden" name="selected_avatar" id="selected-avatar">
   <div id="avatarCarousel" class="carousel slide mb-4" data-bs-ride="carousel">
     <div class="carousel-inner">
       {% for avatar in avatars %}

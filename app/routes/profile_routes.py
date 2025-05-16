@@ -39,23 +39,19 @@ def update_password():
 
     return render_template('profile.html')
 
-AVATAR_LIST = [
-    'borat.png',
-    'chicken.jpg'
-]
 
 @profile_bp.route('/update_avatar', methods=['POST'])
 @login_required
 def update_avatar():
-    avatar_folder = os.path.join(app.static, 'avatars')
+    avatar_folder = os.path.join(app.static_folder, 'avatars')
     avatars = sorted([f for f in os.listdir(avatar_folder) if f.endswith(('.png', '.jpg', '.jpeg'))])
     if request.method == 'POST':
-        selected_avatar = request.form.get('avatar')
+        selected_avatar = request.form.get('selected_avatar')
         if selected_avatar and selected_avatar in avatars:
             current_user.avatar = secure_filename(selected_avatar)
             db.session.commit()
             flash('Avatar updated!', 'success')
-            return redirect(url_for('profile'))  # Adjust to your profile route
+            return redirect(url_for('profile.profile'))  # Adjust to your profile route
         else:
             flash('Invalid avatar selected.', 'danger')
 
