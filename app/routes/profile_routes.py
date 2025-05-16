@@ -18,7 +18,7 @@ TMP_AVATAR_LIST = [
 def profile():
     avatar_folder = os.path.join(current_app.static_folder, 'avatars')
     avatars = sorted([f for f in os.listdir(avatar_folder) if f.endswith(('.png', '.jpg', '.jpeg'))])
-    return render_template("profile.html", avatars=TMP_AVATAR_LIST)
+    return render_template("profile.html", avatars=TMP_AVATAR_LIST, current_avatar=session.get('avatar', 'chicken.jpg'))
 
 @profile_bp.route('/update_password', methods=['POST'])
 @login_required
