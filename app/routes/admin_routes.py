@@ -25,7 +25,7 @@ def admin_dashboard():
     # Get all tips for current round
     current_fixtures = Fixture.query.filter_by(round=current_round).all()
     current_match_ids = [f.match_id for f in current_fixtures]
-
+    print('HERE!!!!!!!!!!: ',current_match_ids)
     tips_by_user = {}
     for user in users:
         tips = Tip.query.filter(Tip.user_id == user.id, Tip.match.in_(current_match_ids)).all()
