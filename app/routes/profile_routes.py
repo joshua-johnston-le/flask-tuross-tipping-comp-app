@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, url_for, request, flash
+from flask import Blueprint, render_template, redirect, url_for, request, flash, current_app
 from flask_login import login_required, current_user
 from werkzeug.security import check_password_hash, generate_password_hash
 from werkzeug.utils import secure_filename
@@ -11,7 +11,7 @@ profile_bp = Blueprint('profile', __name__)
 @profile_bp.route('/profile', methods=['GET','POST'])
 @login_required
 def profile():
-    avatar_folder = os.path.join(app.static_folder, 'avatars')
+    avatar_folder = os.path.join(current_app.static_folder, 'avatars')
     avatars = sorted([f for f in os.listdir(avatar_folder) if f.endswith(('.png', '.jpg', '.jpeg'))])
     return render_template("profile.html", avatars=avatars)
 
