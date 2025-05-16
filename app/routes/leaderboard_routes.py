@@ -14,7 +14,6 @@ def leaderboard():
         db.session.query(
             User.username,
             db.func.sum(UserTipStats.successful_tips).label("total_success"),
-            db.func.sum(UserTipStats.failed_tips).label("total_failure"),
             db.func.sum(UserTipStats.pending_tips).label("total_pending")
         )
         .join(User, User.id == UserTipStats.user_id)
@@ -26,12 +25,15 @@ def leaderboard():
         db.session.query(
             UserTipStats.round_number,
             db.func.sum(UserTipStats.successful_tips).label("total_success"),
-            db.func.sum(UserTipStats.failed_tips).label("total_failure"),
+            over(
+                func.sum(UserTipStats.successful_tips),
+                order_by=UserTipStats.round_number
+            ).label("running_total_success"),
             db.func.sum(UserTipStats.pending_tips).label("total_pending")
         )
         .filter_by(user_id=current_user.id)
         .group_by(UserTipStats.round_number)
-        .order_by(db.desc("total_success"))  # Sort by success descending
+        .order_by(db.asc(UserTipStats.round_number))  # Sort by success descending
         .all()
     )
     
