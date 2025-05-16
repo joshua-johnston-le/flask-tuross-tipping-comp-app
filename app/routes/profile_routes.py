@@ -40,11 +40,14 @@ def update_password():
     return render_template('profile.html')
 
 
-@profile_bp.route('/update_avatar', methods=['POST'])
+@profile_bp.route('/update_avatar', methods=['GET','POST'])
 @login_required
 def update_avatar():
     avatar_folder = os.path.join(app.static_folder, 'avatars')
+    print("PATH CHECK: ", avatar_folder)
     avatars = sorted([f for f in os.listdir(avatar_folder) if f.endswith(('.png', '.jpg', '.jpeg'))])
+    print("LIST CHECK: ", avatars)
+    
     if request.method == 'POST':
         selected_avatar = request.form.get('selected_avatar')
         if selected_avatar and selected_avatar in avatars:
