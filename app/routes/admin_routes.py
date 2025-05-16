@@ -29,5 +29,5 @@ def admin_dashboard():
     for user in users:
         tips = Tip.query.filter(Tip.user_id == user.id, Tip.match.in_(current_match_ids)).all()
         tips_by_user[user.id] = tips
-
+    print('HERE!!!!!!!!!!: ',tips_by_user)
     return render_template("admin.html", users=users, tips_by_user=tips_by_user, round=current_round)
