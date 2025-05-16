@@ -11,7 +11,9 @@ profile_bp = Blueprint('profile', __name__)
 @profile_bp.route('/profile', methods=['GET','POST'])
 @login_required
 def profile():
-    return render_template("profile.html")
+    avatar_folder = os.path.join(app.static_folder, 'avatars')
+    avatars = sorted([f for f in os.listdir(avatar_folder) if f.endswith(('.png', '.jpg', '.jpeg'))])
+    return render_template("profile.html", avatars=avatars)
 
 @profile_bp.route('/update_password', methods=['POST'])
 @login_required
@@ -40,13 +42,11 @@ def update_password():
     return render_template('profile.html')
 
 
-@profile_bp.route('/update_avatar', methods=['GET','POST'])
+@profile_bp.route('/update_avatar', methods=['POST'])
 @login_required
 def update_avatar():
     avatar_folder = os.path.join(app.static_folder, 'avatars')
-    print("PATH CHECK: ", avatar_folder)
     avatars = sorted([f for f in os.listdir(avatar_folder) if f.endswith(('.png', '.jpg', '.jpeg'))])
-    print("LIST CHECK: ", avatars)
     
     if request.method == 'POST':
         selected_avatar = request.form.get('selected_avatar')
