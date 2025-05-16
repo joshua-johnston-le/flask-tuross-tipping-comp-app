@@ -38,6 +38,7 @@ def create_app():
     from .routes.leaderboard_routes import leaderboard_bp
     from .routes.chat_routes import chat_bp
     from .routes.profile_routes import profile_bp
+    from .routes.admin_routes import admin_bp
 
     app.register_blueprint(auth_bp)
     app.register_blueprint(tip_bp)
@@ -45,6 +46,7 @@ def create_app():
     app.register_blueprint(leaderboard_bp)
     app.register_blueprint(chat_bp)
     app.register_blueprint(profile_bp)
+    app.register_blueprint(admin_bp)
     
     with app.app_context():
         db.create_all()
