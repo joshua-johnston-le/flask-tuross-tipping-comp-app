@@ -117,7 +117,7 @@ def update_user_tip_stats():
     users = User.query.all()
 
     for user in users:
-        for round_number in range(1, find_current_round() + 1):  # Start from round 1
+        for round_number in range(11, find_current_round() + 1):  # Start from round 11, this is first round of non-manual tip stats
             round_results = get_user_round_results(user.id, round_number)
 
             stat = UserTipStats.query.filter_by(user_id=user.id, round_number=round_number).first()
