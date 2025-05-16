@@ -24,18 +24,18 @@ def update_password():
         # Check if current password matches
         if not current_user.check_password(current_password):
             flash('Current password is incorrect', 'danger')
-            return redirect(url_for('profile'))
+            return redirect(url_for('profile.profile'))
 
         # Validate new password and confirm password match
         if new_password != confirm_password:
             flash('New passwords do not match', 'danger')
-            return redirect(url_for('profile'))
+            return redirect(url_for('profile.profile'))
 
         # Update password
         current_user.set_password(new_password)
         db.session.commit()
         flash('Password updated successfully', 'success')
-        return redirect(url_for('profile'))
+        return redirect(url_for('profile.profile'))
 
     return render_template('profile.html')
 
