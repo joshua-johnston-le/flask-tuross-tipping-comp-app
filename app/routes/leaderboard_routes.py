@@ -3,6 +3,9 @@ from flask_login import login_required, current_user
 from app.models import db, Tip, FixtureFree, User, UserTipStats
 from app.utils.team_logos import TEAM_LOGOS
 from datetime import date, timedelta
+from sqlalchemy import func, asc
+from sqlalchemy.orm import aliased
+from sqlalchemy import over
 
 leaderboard_bp = Blueprint('leaderboard', __name__)
 
@@ -21,19 +24,34 @@ def leaderboard():
         .order_by(db.desc("total_success"))  # Sort by success descending
         .all()
     )
+    
+    #building a subquery so i can use the windows function to calc running total
+    subquery = (
+        db.session.query(
+            UserTipStats.round_number.label("round_number"),
+            func.sum(UserTipStats.successful_tips).label("total_success"),
+            func.sum(UserTipStats.pending_tips).label("total_pending")
+        )
+        .filter(UserTipStats.user_id == current_user.id)
+        .group_by(UserTipStats.round_number)
+        .subquery()
+    )
+
+    
+    alias = aliased(subquery)
+
+    
     round_data = (
         db.session.query(
-            UserTipStats.round_number,
-            db.func.sum(UserTipStats.successful_tips).label("total_success"),
+            alias.c.round_number,
+            alias.c.total_success,
+            alias.c.total_pending,
             over(
-                func.sum(UserTipStats.successful_tips),
-                order_by=UserTipStats.round_number
-            ).label("running_total_success"),
-            db.func.sum(UserTipStats.pending_tips).label("total_pending")
+                func.sum(alias.c.total_success),
+                order_by=alias.c.round_number
+            ).label("running_total_success")
         )
-        .filter_by(user_id=current_user.id)
-        .group_by(UserTipStats.round_number)
-        .order_by(db.asc(UserTipStats.round_number))  # Sort by success descending
+        .order_by(alias.c.round_number)
         .all()
     )
     
