@@ -3,7 +3,7 @@ from flask_login import login_required, current_user
 from app.models import User, Tip, Fixture
 from datetime import date
 from app import db
-from app.services.fixtures import 
+from app.services.fixtures import find_current_round
 
 admin_bp = Blueprint("admin", __name__)
 
