@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, redirect, url_for
 from flask_login import login_required, current_user
-from app.models import User, Tip, Fixture
+from app.models import User, Tip, FixtureFree
 from datetime import date
 from app import db
 from app.services.fixtures import find_current_round
