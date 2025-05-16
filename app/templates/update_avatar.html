@@ -10,7 +10,7 @@
           data-filename="{{ avatar }}"
           alt="{{ avatar }}"
         />
-        <div class="avatar-label">{{ avatar }}</div>
+        <div class="avatar-label text-center">{{ avatar.split('.')[0].capitalize() }}</div>
       </div>
       {% endfor %}
     </div>
@@ -95,12 +95,16 @@
     margin: 0 auto;
     display: block;
   }
-  
 
   .avatar-label {
     margin-top: 15px;
     font-weight: bold;
     font-size: 1.25rem;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 4px 8px;
+    border-radius: 8px;
+    display: inline-block;
   }
 
   .carousel-control-prev-icon,
