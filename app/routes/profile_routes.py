@@ -8,12 +8,17 @@ import os
 
 profile_bp = Blueprint('profile', __name__)
 
+TMP_AVATAR_LIST = [
+    'borat.png',
+    'chicken.png'
+]
+
 @profile_bp.route('/profile', methods=['GET','POST'])
 @login_required
 def profile():
     avatar_folder = os.path.join(current_app.static_folder, 'avatars')
     avatars = sorted([f for f in os.listdir(avatar_folder) if f.endswith(('.png', '.jpg', '.jpeg'))])
-    return render_template("profile.html", avatars=avatars)
+    return render_template("profile.html", avatars=TMP_AVATAR_LIST)
 
 @profile_bp.route('/update_password', methods=['POST'])
 @login_required
@@ -45,17 +50,16 @@ def update_password():
 @profile_bp.route('/update_avatar', methods=['POST'])
 @login_required
 def update_avatar():
-    avatar_folder = os.path.join(app.static_folder, 'avatars')
+    avatar_folder = os.path.join(current_app.static_folder, 'avatars')
     avatars = sorted([f for f in os.listdir(avatar_folder) if f.endswith(('.png', '.jpg', '.jpeg'))])
     
-    if request.method == 'POST':
-        selected_avatar = request.form.get('selected_avatar')
-        if selected_avatar and selected_avatar in avatars:
-            current_user.avatar = secure_filename(selected_avatar)
-            db.session.commit()
-            flash('Avatar updated!', 'success')
-            return redirect(url_for('profile.profile'))  # Adjust to your profile route
-        else:
-            flash('Invalid avatar selected.', 'danger')
+    selected_avatar = request.form.get('selected_avatar')
+    if selected_avatar and selected_avatar in avatars:
+        current_user.avatar = secure_filename(selected_avatar)
+        db.session.commit()
+        flash('Avatar updated!', 'success')
+        return redirect(url_for('profile.profile'))  # Adjust to your profile route
+    else:
+        flash('Invalid avatar selected.', 'danger')
 
-    return render_template('profile.html', avatars=avatars)
+    return render_template('profile.html', avatars=TMP_AVATAR_LIST)
