@@ -10,7 +10,7 @@ profile_bp = Blueprint('profile', __name__)
 
 TMP_AVATAR_LIST = [
     'borat.png',
-    'chicken.png'
+    'chicken.jpg'
 ]
 
 @profile_bp.route('/profile', methods=['GET','POST'])
