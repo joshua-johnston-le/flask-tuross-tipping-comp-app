@@ -15,7 +15,7 @@ def admin_dashboard():
 
     # Get current round (assuming you have a way to determine it)
     current_round = find_current_round()
-    print('HERE!!!!!!!!!!: ',current_round)
+
     if not current_round:
         return render_template("admin.html", round_data=None)
 
@@ -23,12 +23,12 @@ def admin_dashboard():
     users = User.query.all()
 
     # Get all tips for current round
-    current_fixtures = Fixture.query.filter_by(round=current_round).all()
+    current_fixtures = FixtureFree.query.filter_by(round=current_round).all()
     current_match_ids = [f.match_id for f in current_fixtures]
-    print('HERE!!!!!!!!!!: ',current_match_ids)
+
     tips_by_user = {}
     for user in users:
         tips = Tip.query.filter(Tip.user_id == user.id, Tip.match.in_(current_match_ids)).all()
         tips_by_user[user.id] = tips
-    print('HERE!!!!!!!!!!: ',tips_by_user)
+
     return render_template("admin.html", users=users, tips_by_user=tips_by_user, round=current_round)
