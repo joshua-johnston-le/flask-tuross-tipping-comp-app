@@ -10,7 +10,7 @@
                 <tr>
                     <th>Round</th>
                     <th>Successful Tips</th>
-                    <th>Failed Tips</th>
+                    <th>Running Total</th>
                     <th>Pending Tips</th>
                 </tr>
             </thead>
@@ -19,7 +19,7 @@
                 <tr>
                     <td>{{ row.round_number }}</td>
                     <td>{{ row.total_success }}</td>
-                    <td>{{ row.total_failure }}</td>
+                    <td>{{ row.running_total_success }}</td>
                     <td>{{ row.total_pending }}</td>
                 </tr>
                 {% endfor %}
@@ -34,7 +34,6 @@
                     <th>Rank</th>
                     <th>Username</th>
                     <th>Successful Tips</th>
-                    <th>Failed Tips</th>
                     <th>Pending Tips</th>
                 </tr>
             </thead>
@@ -44,7 +43,6 @@
                     <td>{{ loop.index }}</td>
                     <td>{{ row.username }}</td>
                     <td>{{ row.total_success }}</td>
-                    <td>{{ row.total_failure }}</td>
                     <td>{{ row.total_pending }}</td>
                 </tr>
                 {% endfor %}
