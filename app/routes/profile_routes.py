@@ -22,7 +22,7 @@ def update_password():
         confirm_password = request.form.get('confirm_password')
 
         # Check if current password matches
-        if not check_password_hash(current_user.password, current_password):
+        if not current_user.check_password(current_password):
             flash('Current password is incorrect', 'danger')
             return redirect(url_for('profile'))
 
@@ -32,7 +32,7 @@ def update_password():
             return redirect(url_for('profile'))
 
         # Update password
-        current_user.password = generate_password_hash(new_password)
+        current_user.set_password(new_password)
         db.session.commit()
         flash('Password updated successfully', 'success')
         return redirect(url_for('profile'))
