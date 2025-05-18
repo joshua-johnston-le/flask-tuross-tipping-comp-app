@@ -12,7 +12,8 @@ au_datetime = datetime.now(pytz.timezone("Australia/Sydney"))
 def run():
     app = create_app()
     with app.app_context():
-        print(f"Initialising Cron Job at: {au_datetime}")
+        curr_round = find_current_round()
+        print(f"Initialising Cron Job at: {au_datetime}, for NRL ROUND: {curr_round}")
         print("Running cron job: upserting NRL fixtures...")
         upsert_free_fixtures()
         print("Fixtures updated, ✅.")
@@ -23,7 +24,7 @@ def run():
         print("Running cron job: updating tip results...")
         update_user_tip_stats()
         print("Scores updated, ✅.")
-        print(f"Results for current round:")
+        print(f"Results for current round: {curr_round}")
         results = UserTipStats.query.filter_by(round_number=find_current_round()).all()
         for result in results:
             print(f"{result.user.username} got: {result.successful_tips}")
