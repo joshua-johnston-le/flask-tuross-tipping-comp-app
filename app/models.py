@@ -46,6 +46,7 @@ class Fixture(db.Model):
     #__table_args__ = (db.UniqueConstraint('season', 'round', 'home_team', 'away_team', name='_unique_fixture'),)
 
 class FixtureFree(db.Model):
+    __tablename__ = 'fixture_free'
     id = db.Column(db.Integer, primary_key=True)
     match_id = db.Column(db.String, unique=True, nullable=False)
     season = db.Column(db.Integer, nullable=False)
