@@ -45,7 +45,7 @@ def chat():
 
     chat_messages = []
     if selected_match:
-        chat_messages = ChatMessage.query.filter_by(match_id=selected_match.id).order_by(ChatMessage.timestamp.asc()).all()
+        chat_messages = ChatMessage.query.filter_by(match_id=selected_match.match_id).order_by(ChatMessage.timestamp.asc()).all()
 
     chat_open = is_chat_open(selected_match)
 
