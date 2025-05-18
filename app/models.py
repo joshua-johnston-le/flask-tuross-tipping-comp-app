@@ -90,7 +90,7 @@ class ChatMessage(db.Model):
     __tablename__ = 'chat_messages'
     id = db.Column(db.Integer, primary_key = True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    match_id = db.Column(db.Integer, db.ForeignKey("fixture_free.id"), nullable=False)
+    match_id = db.Column(db.Integer, db.ForeignKey("fixture_free.match_id"), nullable=False)
     message = db.Column(db.Text, nullable=False)
     timestamp = db.Column(db.DateTime, default=lambda: datetime.now(au_tz))
     
