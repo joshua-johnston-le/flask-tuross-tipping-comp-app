@@ -50,13 +50,12 @@
                     Match {{ tip.match }} →
                     {{ tip.selected_team }} →
                     {% if results_map[tip.match] is not none and tip.selected_team==results_map[tip.match] %}
-                      ✅ Correct
+                      ✅ Correct<br>
                     {% if results_map[tip.match] is none %}
-                      Pending
+                      Pending<br>
                     {% else %}
-                      ❌ Incorrect
+                      ❌ Incorrect<br>
                     {% endif %}
-                    <br>
                   {% endfor %}
                 {% else %}
                   No tips submitted.
@@ -90,13 +89,12 @@
                     Match {{ tip.match }} →
                     {{ tip.selected_team }} →
                     {% if results_map[tip.match] is not none and tip.selected_team==results_map[tip.match] %}
-                      ✅ Correct
+                      ✅ Correct<br>
                     {% if results_map[tip.match] is none %}
-                      Pending
+                      Pending<br>
                     {% else %}
-                      ❌ Incorrect
+                      ❌ Incorrect<br>
                     {% endif %}
-                    <br>
                   {% endfor %}
                 {% else %}
                   No tips submitted.
