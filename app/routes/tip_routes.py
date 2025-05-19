@@ -77,7 +77,7 @@ def view_tips():
     fixtures = FixtureFree.query.filter_by(round=selected_round).all()
     match_ids = [f.match_id for f in fixtures]
 
-    users = User.query.all()
+    users = User.query.filter(~User.username.in_(['joshua_johnston','testing_db2'])).all()
     tips_by_user = {
         user.id: Tip.query.filter(Tip.user_id == user.id, Tip.match.in_(match_ids)).all()
         for user in users if user.username not in ['joshua_johnston', 'testing_db2']
