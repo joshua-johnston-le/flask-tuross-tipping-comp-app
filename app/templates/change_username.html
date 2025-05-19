@@ -1,0 +1,28 @@
+<!-- templates/change_username.html -->
+<h5 class="mt-4">Change a User's Username</h5>
+
+<form method="POST" action="{{ url_for('admin.admin_dashboard') }}" class="row g-3 mt-3">
+  <div class="col-md-4">
+    <label for="user_id" class="form-label">Select User</label>
+    <select class="form-select" id="user_id" name="user_id" required>
+      {% for user in users %}
+        <option value="{{ user.id }}">{{ user.username }}</option>
+      {% endfor %}
+    </select>
+  </div>
+
+  <div class="col-md-4">
+    <label for="new_username" class="form-label">New Username</label>
+    <input type="text" class="form-control" id="new_username" name="new_username" required>
+  </div>
+
+  <div class="col-md-4 d-flex align-items-end">
+    <button type="submit" class="btn btn-warning w-100">Update Username</button>
+  </div>
+</form>
+
+{% if username_update_success %}
+  <div class="alert alert-success mt-3">Username updated successfully.</div>
+{% elif username_update_error %}
+  <div class="alert alert-danger mt-3">{{ username_update_error }}</div>
+{% endif %}
