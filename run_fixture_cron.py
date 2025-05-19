@@ -21,7 +21,7 @@ def run():
         fixtures = FixtureFree.query.filter_by(round=find_current_round()).all()
         for fixture in fixtures:
             print(f"{fixture.home_team} vs {fixture.away_team}: {fixture.home_score} - {fixture.away_score}")
-        print("Running cron job: updating tip results...")
+        print("Updating tip results...")
         update_user_tip_stats()
         print("Scores updated, ✅.")
         print(f"Results for current round: {curr_round}")
