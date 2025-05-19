@@ -82,12 +82,15 @@ def view_tips():
         user.id: Tip.query.filter(Tip.user_id == user.id, Tip.match.in_(match_ids)).all()
         for user in users if user.username not in ['joshua_johnston', 'testing_db2']
     }
-
+    
+    results_map = {match : FixtureFree.get_wining_team(match) for match in match_ids}
+    
     return render_template(
         "view_tips.html",
         users=users,
         tips_by_user=tips_by_user,
         selected_round=selected_round,
         all_rounds=all_rounds,
-        fixtures=fixtures
+        fixtures=fixtures,
+        results_map=results_map
     )

@@ -47,11 +47,12 @@
             <td>
                 {% if tips_by_user[current_user.id] %}
                   {% for tip in tips_by_user[current_user.id] %}
-                    {% set winning_team = fixtures.get_wining_team(tip.match) %}
                     Match {{ tip.match }} →
                     {{ tip.selected_team }} →
-                    {% if tip.selected_team == winning_team %}
+                    {% if results_map[tip.match] not none and tip.selected_team==results_map[tip.match] %}
                       ✅ Correct
+                    {% if results_map[tip.match] is none %}
+                      Pending
                     {% else %}
                       ❌ Incorrect
                     {% endif %}
@@ -86,11 +87,12 @@
               <td>
                 {% if tips_by_user[user.id] %}
                   {% for tip in tips_by_user[user.id] %}
-                    {% set winning_team = fixtures.get_wining_team(tip.match) %}
                     Match {{ tip.match }} →
                     {{ tip.selected_team }} →
-                    {% if tip.selected_team == winning_team %}
+                    {% if results_map[tip.match] not none and tip.selected_team==results_map[tip.match] %}
                       ✅ Correct
+                    {% if results_map[tip.match] is none %}
+                      Pending
                     {% else %}
                       ❌ Incorrect
                     {% endif %}
