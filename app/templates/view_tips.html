@@ -24,7 +24,6 @@
             <th>Tips Submitted</th>
             <th>Match Details</th>
             <th>Match Results</th>
-            <th>Tip Results</th>
           </tr>
         </thead>
         <tbody>
@@ -44,6 +43,23 @@
                 {% for fixture in fixtures %}
                     {{ fixture.home_team }}: {{ fixture.home_score }} vs. {{ fixture.away_team }}: {{ fixture.away_score }}<br>
                 {% endfor %}
+            </td>
+            <td>
+                {% if tips_by_user[user.id] %}
+                  {% for tip in tips_by_user[user.id] %}
+                    {% set winning_team = fixtures.get_wining_team(tip.match) %}
+                    Match {{ tip.match }} →
+                    {{ tip.selected_team }} →
+                    {% if tip.selected_team == winning_team %}
+                      ✅ Correct
+                    {% else %}
+                      ❌ Incorrect
+                    {% endif %}
+                    <br>
+                  {% endfor %}
+                {% else %}
+                  No tips submitted.
+                {% endif %}
             </td>
                 
           </tr>
@@ -67,7 +83,23 @@
                     {{ fixture.home_team }}: {{ fixture.home_score }} vs. {{ fixture.away_team }}: {{ fixture.away_score }}<br>
                 {% endfor %}
               </td>
-              
+              <td>
+                {% if tips_by_user[user.id] %}
+                  {% for tip in tips_by_user[user.id] %}
+                    {% set winning_team = fixtures.get_wining_team(tip.match) %}
+                    Match {{ tip.match }} →
+                    {{ tip.selected_team }} →
+                    {% if tip.selected_team == winning_team %}
+                      ✅ Correct
+                    {% else %}
+                      ❌ Incorrect
+                    {% endif %}
+                    <br>
+                  {% endfor %}
+                {% else %}
+                  No tips submitted.
+                {% endif %}
+              </td>
             </tr>
             {% endif %}
           {% endfor %}
