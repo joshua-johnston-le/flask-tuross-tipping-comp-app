@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import login_required, current_user
-from app.models import db, Tip, FixtureFree
+from app.models import db, Tip, FixtureFree, User
 from app.utils.team_logos import TEAM_LOGOS
 from datetime import date, timedelta
 from app.utils.helper_functions import get_all_rounds
