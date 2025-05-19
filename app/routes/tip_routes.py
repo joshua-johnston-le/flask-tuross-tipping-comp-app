@@ -83,7 +83,7 @@ def view_tips():
         for user in users if user.username not in ['joshua_johnston', 'testing_db2']
     }
     
-    results_map = {match : FixtureFree.get_wining_team(match) for match in match_ids}
+    results_map = {match : FixtureFree.get_winning_team(match) for match in match_ids}
     
     return render_template(
         "view_tips.html",
