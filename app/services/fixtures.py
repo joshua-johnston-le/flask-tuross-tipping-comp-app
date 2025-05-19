@@ -3,7 +3,7 @@ import requests
 from dotenv import load_dotenv
 from datetime import datetime
 from app.models import Fixture, FixtureFree, db, User, UserTipStats, Tip
-from app import create_app  # Make sure you have a factory method
+from app import create_app 
 from datetime import datetime, date, timedelta
 import pytz
 
