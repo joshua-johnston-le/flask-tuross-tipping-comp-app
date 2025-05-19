@@ -42,15 +42,10 @@
             </td>
             <td>
                 {% for fixture in fixtures %}
-                    {{ fixture.match_id }}: {{ fixture.home_team }} vs. {{ fixture.away_team }}
+                    {{ fixture.home_team }}: {{ fixture.home_score }} vs. {{ fixture.away_team }}: {{ fixture.away_score }}<br>
                 {% endfor %}
             </td>
-            <td>
-                TBD
-            </td>
-            <td>
-                TBD
-            </td>    
+                
           </tr>
       
           <!-- Then show all other users -->
@@ -69,15 +64,10 @@
               </td>
               <td>
                 {% for fixture in fixtures %}
-                    {{ fixture.match_id }}: {{ fixture.home_team }} vs. {{ fixture.away_team }}
+                    {{ fixture.home_team }}: {{ fixture.home_score }} vs. {{ fixture.away_team }}: {{ fixture.away_score }}<br>
                 {% endfor %}
               </td>
-              <td>
-                TBD
-              </td>
-              <td>
-                TBD
-              </td>
+              
             </tr>
             {% endif %}
           {% endfor %}
