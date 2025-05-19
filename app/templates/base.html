@@ -74,8 +74,9 @@
     <h1>Tuross Tipping Comp</h1>
     <nav>
       <a href="{{ url_for('main.home') }}">Home</a>
+      {% if request.blueprint == 'auth' and not current_user.is_authenticated%}
       <a href="{{ url_for('auth.login') }}">Login</a>
-      {# <a href="{{ url_for('auth.register') }}">Register</a> #}
+      {% endif %}
     </nav>
   </header>
 
