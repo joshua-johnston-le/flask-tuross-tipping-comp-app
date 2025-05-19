@@ -40,28 +40,29 @@
               {% endif %}
             </td>
             <td>
-                {% for fixture in fixtures %}
-                    {{ fixture.home_team }}: {{ fixture.home_score }} vs. {{ fixture.away_team }}: {{ fixture.away_score }}<br>
-                {% endfor %}
+              {% for fixture in fixtures %}
+                {{ fixture.home_team }}: {{ fixture.home_score }} vs. {{ fixture.away_team }}: {{ fixture.away_score }}<br>
+              {% endfor %}
             </td>
             <td>
-                {% if tips_by_user[current_user.id] %}
-                  {% for tip in tips_by_user[current_user.id] %}
-                    Match {{ tip.match }} →
-                    {{ tip.selected_team }} →
-                    {% if results_map[tip.match] is not none and tip.selected_team==results_map[tip.match] %}
-                      ✅ Correct<br>
-                    {% if results_map[tip.match] is none %}
-                      Pending<br>
+              {% if tips_by_user[current_user.id] %}
+                {% for tip in tips_by_user[current_user.id] %}
+                  Match {{ tip.match }} → {{ tip.selected_team }} →
+                  {% if results_map[tip.match] is not none %}
+                    {% if tip.selected_team == results_map[tip.match] %}
+                      ✅ Correct
                     {% else %}
-                      ❌ Incorrect<br>
+                      ❌ Incorrect
                     {% endif %}
-                  {% endfor %}
-                {% else %}
-                  No tips submitted.
-                {% endif %}
+                  {% else %}
+                    ⏳ Pending
+                  {% endif %}
+                  <br>
+                {% endfor %}
+              {% else %}
+                No tips submitted.
+              {% endif %}
             </td>
-                
           </tr>
       
           <!-- Then show all other users -->
@@ -80,21 +81,23 @@
               </td>
               <td>
                 {% for fixture in fixtures %}
-                    {{ fixture.home_team }}: {{ fixture.home_score }} vs. {{ fixture.away_team }}: {{ fixture.away_score }}<br>
+                  {{ fixture.home_team }}: {{ fixture.home_score }} vs. {{ fixture.away_team }}: {{ fixture.away_score }}<br>
                 {% endfor %}
               </td>
               <td>
                 {% if tips_by_user[user.id] %}
                   {% for tip in tips_by_user[user.id] %}
-                    Match {{ tip.match }} →
-                    {{ tip.selected_team }} →
-                    {% if results_map[tip.match] is not none and tip.selected_team==results_map[tip.match] %}
-                      ✅ Correct<br>
-                    {% if results_map[tip.match] is none %}
-                      Pending<br>
+                    Match {{ tip.match }} → {{ tip.selected_team }} →
+                    {% if results_map[tip.match] is not none %}
+                      {% if tip.selected_team == results_map[tip.match] %}
+                        ✅ Correct
+                      {% else %}
+                        ❌ Incorrect
+                      {% endif %}
                     {% else %}
-                      ❌ Incorrect<br>
+                      ⏳ Pending
                     {% endif %}
+                    <br>
                   {% endfor %}
                 {% else %}
                   No tips submitted.
@@ -104,7 +107,8 @@
             {% endif %}
           {% endfor %}
         </tbody>
-    </table>
+      </table>
+      
       
   </div>
 </div>
