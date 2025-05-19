@@ -4,6 +4,7 @@ from app.models import db, Tip, FixtureFree
 from app.utils.team_logos import TEAM_LOGOS
 from datetime import date, timedelta
 from app.utils.helper_functions import get_all_rounds
+from app.services.fixtures import find_current_round
 
 tip_bp = Blueprint('tip', __name__)
 
