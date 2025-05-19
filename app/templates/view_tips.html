@@ -22,6 +22,9 @@
           <tr>
             <th>User</th>
             <th>Tips Submitted</th>
+            <th>Match Details</th>
+            <th>Match Results</th>
+            <th>Tip Results</th>
           </tr>
         </thead>
         <tbody>
@@ -37,6 +40,17 @@
                 No tips submitted.
               {% endif %}
             </td>
+            <td>
+                {% for fixture in fixtures %}
+                    {{ fixture.match_id }}: {{ fixture.home_team }} vs. {{ fixture.away_team }}
+                {% endfor %}
+            </td>
+            <td>
+                TBD
+            </td>
+            <td>
+                TBD
+            </td>    
           </tr>
       
           <!-- Then show all other users -->
@@ -52,6 +66,17 @@
                 {% else %}
                   No tips submitted.
                 {% endif %}
+              </td>
+              <td>
+                {% for fixture in fixtures %}
+                    {{ fixture.match_id }}: {{ fixture.home_team }} vs. {{ fixture.away_team }}
+                {% endfor %}
+              </td>
+              <td>
+                TBD
+              </td>
+              <td>
+                TBD
               </td>
             </tr>
             {% endif %}
