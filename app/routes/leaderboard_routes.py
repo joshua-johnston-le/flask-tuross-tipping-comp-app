@@ -20,7 +20,8 @@ def leaderboard():
             db.func.sum(UserTipStats.pending_tips).label("total_pending")
         )
         .join(User, User.id == UserTipStats.user_id)
-        .group_by(User.id)
+        .filter(~User.username.in_(['joshua_johnston','testing_db2']))
+        .group_by(User.username)
         .order_by(db.desc("total_success"))  # Sort by success descending
         .all()
     )
