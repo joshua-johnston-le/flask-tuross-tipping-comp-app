@@ -64,7 +64,7 @@ def submit_tip():
         team_logos=TEAM_LOGOS
     )
 
-@main_bp.route("/view-tips")
+@tip_bp.route("/view-tips")
 @login_required
 def view_tips():
     selected_round = request.args.get("round", type=int)
