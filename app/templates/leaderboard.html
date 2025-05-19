@@ -1,53 +1,55 @@
 {% extends "base.html" %}
 
 {% block content %}
-<main class="container mt-5">
-    <div class="text-center mb-4">
-        <h2 class="display-6 text-black fw-bold">Round Results For {{ current_user.username }}</h2>
+<main class="container-fluid mt-5">
+    <div class="row justify-content-center">
+        <div class="col-12 col-sm-10 col-md-8 col-lg-6">
+            <h2 class="display-6 text-black fw-bold">Round Results For {{ current_user.username }}</h2>
 
-        <table class="table table-bordered table-hover table-dark mt-3 custom-table">
-            <thead>
-                <tr>
-                    <th>Round</th>
-                    <th>Successful Tips</th>
-                    <th>Running Total</th>
-                    <th>Pending Tips</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for row in round_data %}
-                <tr>
-                    <td>{{ row.round_number }}</td>
-                    <td>{{ row.total_success }}</td>
-                    <td>{{ row.running_total_success }}</td>
-                    <td>{{ row.total_pending }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+            <table class="table table-bordered table-hover table-dark mt-3 custom-table">
+                <thead>
+                    <tr>
+                        <th>Round</th>
+                        <th>Successful Tips</th>
+                        <th>Running Total</th>
+                        <th>Pending Tips</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in round_data %}
+                    <tr>
+                        <td>{{ row.round_number }}</td>
+                        <td>{{ row.total_success }}</td>
+                        <td>{{ row.running_total_success }}</td>
+                        <td>{{ row.total_pending }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
 
-        <h2 class="display-6 text-black fw-bold mt-4">Leaderboard</h2>
+            <h2 class="display-6 text-black fw-bold mt-4">Leaderboard</h2>
 
-        <table class="table table-bordered table-hover table-dark mt-3 custom-table">
-            <thead>
-                <tr>
-                    <th>Rank</th>
-                    <th>Username</th>
-                    <th>Successful Tips</th>
-                    <th>Pending Tips</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for row in leaderboard_data %}
-                <tr {% if current_user.username == row.username %}class="table-success"{% endif %}>
-                    <td>{{ loop.index }}</td>
-                    <td>{{ row.username }}</td>
-                    <td>{{ row.total_success }}</td>
-                    <td>{{ row.total_pending }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+            <table class="table table-bordered table-hover table-dark mt-3 custom-table">
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Username</th>
+                        <th>Successful Tips</th>
+                        <th>Pending Tips</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in leaderboard_data %}
+                    <tr {% if current_user.username == row.username %}class="table-success"{% endif %}>
+                        <td>{{ loop.index }}</td>
+                        <td>{{ row.username }}</td>
+                        <td>{{ row.total_success }}</td>
+                        <td>{{ row.total_pending }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
 </main>
 {% endblock %}
