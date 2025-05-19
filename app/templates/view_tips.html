@@ -19,31 +19,34 @@
   <div class="table-responsive">
     <table class="table table-bordered text-white">
         <thead class="table-light text-dark">
+            <tr>
+                <th>Round Results</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    {% for fixture in fixtures %}
+                        Match {{ fixture.match_id }}: {{ fixture.home_team }} ({{ fixture.home_score }}) vs {{ fixture.away_team }} ({{ fixture.away_score }})
+                    {% endfor %}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table table-bordered text-white">
+        <thead class="table-light text-dark">
           <tr>
             <th>User</th>
             <th>Tips Submitted</th>
-            <th>Match Details</th>
-            <th>Match Results</th>
           </tr>
         </thead>
         <tbody>
           <!-- Show current_user first -->
           <tr class="table-success">
             <td><strong>{{ current_user.username }} (You)</strong></td>
-            <td>
-              {% if tips_by_user[current_user.id] %}
-                {% for tip in tips_by_user[current_user.id] %}
-                  Match {{ tip.match }} → {{ tip.selected_team }}<br>
-                {% endfor %}
-              {% else %}
-                No tips submitted.
-              {% endif %}
-            </td>
-            <td>
-              {% for fixture in fixtures %}
-                {{ fixture.home_team }}: {{ fixture.home_score }} vs. {{ fixture.away_team }}: {{ fixture.away_score }}<br>
-              {% endfor %}
-            </td>
             <td>
               {% if tips_by_user[current_user.id] %}
                 {% for tip in tips_by_user[current_user.id] %}
@@ -69,20 +72,6 @@
             {% if user.id != current_user.id %}
               <tr>
                 <td>{{ user.username }}</td>
-                <td>
-                  {% if tips_by_user[user.id] %}
-                    {% for tip in tips_by_user[user.id] %}
-                      Match {{ tip.match }} → {{ tip.selected_team }}<br>
-                    {% endfor %}
-                  {% else %}
-                    No tips submitted.
-                  {% endif %}
-                </td>
-                <td>
-                  {% for fixture in fixtures %}
-                    {{ fixture.home_team }}: {{ fixture.home_score }} vs. {{ fixture.away_team }}: {{ fixture.away_score }}<br>
-                  {% endfor %}
-                </td>
                 <td>
                   {% if tips_by_user[user.id] %}
                     {% for tip in tips_by_user[user.id] %}
