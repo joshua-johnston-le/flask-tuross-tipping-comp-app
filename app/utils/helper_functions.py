@@ -26,3 +26,13 @@ def get_user_rank(user_id):
             return idx  # Rank starts at 1
 
     return None
+
+def has_user_submitted_tips(user_id):
+    pass
+
+def get_all_rounds():
+    rounds = db.session.query(FixtureFree.round).distinct().order_by(FixtureFree.round).all()
+    return [r[0] for r in rounds]
+
+    
+    

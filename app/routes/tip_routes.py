@@ -3,6 +3,7 @@ from flask_login import login_required, current_user
 from app.models import db, Tip, FixtureFree
 from app.utils.team_logos import TEAM_LOGOS
 from datetime import date, timedelta
+from app.utils.helper_functions import get_all_rounds
 
 tip_bp = Blueprint('tip', __name__)
 
@@ -63,3 +64,28 @@ def submit_tip():
         team_logos=TEAM_LOGOS
     )
 
+@main_bp.route("/view-tips")
+@login_required
+def view_tips():
+    selected_round = request.args.get("round", type=int)
+    all_rounds = get_all_rounds()
+
+    if not selected_round:
+        selected_round = find_current_round()
+
+    fixtures = FixtureFree.query.filter_by(round=selected_round).all()
+    match_ids = [f.match_id for f in fixtures]
+
+    users = User.query.all()
+    tips_by_user = {
+        user.id: Tip.query.filter(Tip.user_id == user.id, Tip.match.in_(match_ids)).all()
+        for user in users
+    }
+
+    return render_template(
+        "view_tips.html",
+        users=users,
+        tips_by_user=tips_by_user,
+        selected_round=selected_round,
+        all_rounds=all_rounds
+    )

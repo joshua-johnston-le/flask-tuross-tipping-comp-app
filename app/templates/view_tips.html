@@ -1,0 +1,46 @@
+<!-- templates/view_tips.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+  <h2 class="mb-4">All Users' Tips - Round {{ selected_round }}</h2>
+
+  <form method="get" action="{{ url_for('tip.view_tips') }}" class="mb-4">
+    <label for="round" class="form-label">Select Round</label>
+    <div class="input-group" style="max-width: 300px;">
+      <select class="form-select" name="round" id="round" onchange="this.form.submit()">
+        {% for round in all_rounds %}
+          <option value="{{ round }}" {% if round == selected_round %}selected{% endif %}>Round {{ round }}</option>
+        {% endfor %}
+      </select>
+    </div>
+  </form>
+
+  <div class="table-responsive">
+    <table class="table table-bordered text-white">
+      <thead class="table-light text-dark">
+        <tr>
+          <th>User</th>
+          <th>Tips Submitted</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for user in users %}
+        <tr>
+          <td>{{ user.username }}</td>
+          <td>
+            {% if tips_by_user[user.id] %}
+              {% for tip in tips_by_user[user.id] %}
+                Match {{ tip.match }} → {{ tip.selected_team }}<br>
+              {% endfor %}
+            {% else %}
+              No tips submitted.
+            {% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
