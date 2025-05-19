@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <title>Home - Tuross Tipping Comp</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -21,10 +22,11 @@
       main {
         flex: 1;
         background-color: rgba(0, 0, 0, 0.6);
-        padding: 2rem;
+        padding: 1rem;
         border-radius: 12px;
-        margin: 2rem auto;
+        margin: 1rem auto;
         max-width: 1000px;
+        width: 95%;
       }
 
       footer {
@@ -47,10 +49,40 @@
         transform: scale(1.05);
       }
 
+      .user-info-box {
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+        padding: 1rem;
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+
+      .user-info-box img {
+        width: 60px;
+        height: 60px;
+        object-fit: cover;
+        border-radius: 50%;
+        border: 2px solid #fff;
+      }
+
+      .user-details {
+        color: #fff;
+        font-size: 1rem;
+      }
+
+      .user-details .username {
+        font-weight: bold;
+        font-size: 1.2rem;
+      }
+
       .match-card {
         border: 1px solid #dee2e6;
         border-radius: 10px;
-        padding: 1.5rem;
+        padding: 1rem;
         margin-bottom: 1.5rem;
         background-color: #ffffff;
         color: #000;
@@ -58,36 +90,14 @@
       }
 
       .team-logo {
-        width: 60px;
-        height: 60px;
+        width: 50px;
+        height: 50px;
         object-fit: contain;
         transition: transform 0.3s ease;
       }
 
       .team-logo:hover {
         transform: scale(1.15);
-      }
-
-      .tip-logo {
-        width: 40px;
-        height: 40px;
-        object-fit: contain;
-        margin-top: 5px;
-        transition: transform 0.3s ease;
-      }
-
-      .tip-logo:hover {
-        transform: scale(1.1);
-        animation: pulse 1s infinite alternate;
-      }
-
-      @keyframes pulse {
-        0% {
-          transform: scale(1.1);
-        }
-        100% {
-          transform: scale(1.2);
-        }
       }
 
       .selected-team {
@@ -101,7 +111,7 @@
         border-radius: 6px;
         color: #fff;
         font-weight: bold;
-        font-size: 0.9rem;
+        font-size: 0.85rem;
       }
 
       .home-color {
@@ -112,130 +122,97 @@
         background-color: #6f42c1;
       }
 
-      .your-tip {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        margin-top: 0.25rem;
-        margin-left: -12px;
-      }
-
       .vs-text {
         color: #000;
-        font-size: 1.5rem;
+        font-size: 1.3rem;
         font-weight: bold;
       }
 
-      /* Custom styles for your-tip-box to control positioning */
-      .your-tip-box {
-        margin-right: 20px; /* Adjust to move more left */
-      }
-
-      /* Style for the match date, day, and time */
       .match-datetime {
         color: #000;
-        font-size: 1rem;
+        font-size: 0.95rem;
         font-weight: bold;
-        margin: 10px 0;
+        margin-top: 0.75rem;
       }
 
-      /* New CSS for the NRL logo */
-      .nrl-logo {
-        position: absolute;
-        top: 70px;
-        right: 200px;
-        width: 150px; /* Adjust the size as needed */
-        height: auto;
-        z-index: 10;
+      h1,
+      h3 {
+        text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.6);
       }
 
-      /* New CSS for the NRL logo 2 */
-      .nrl-logo2 {
-        position: absolute;
-        top: 70px;
-        left: 200px;
-        width: 150px; /* Adjust the size as needed */
-        height: auto;
-        z-index: 10;
+      @media (max-width: 576px) {
+        .team-logo {
+          width: 40px;
+          height: 40px;
+        }
+
+        .team-box {
+          font-size: 0.75rem;
+        }
+
+        .vs-text {
+          font-size: 1.1rem;
+        }
+
+        .match-card {
+          padding: 0.75rem;
+        }
       }
     </style>
   </head>
   <body>
-    <main class="container">
+    <main class="container-fluid">
       <div class="text-center mb-4">
         {% if current_user.is_authenticated %}
-        <div
-          class="d-flex justify-content-end align-items-center mb-3 bg-dark bg-opacity-50 p-2 rounded shadow-sm"
-        >
-          {% if current_user.avatar %}
-          <img
-            src="{{ url_for('static', filename='avatars/' ~ current_user.avatar) }}"
-            alt="User Avatar"
-            class="rounded-circle border border-white me-3"
-            style="width: 60px; height: 60px; object-fit: cover"
-          />
-          {% endif %}
-          <div class="text-white">
-            <div class="fw-bold">Hello, {{ current_user.username }} 👋</div>
-            <div>
-              Rank: {{ rank if rank is not none else
-              "Unranked" }}
+        <div class="user-info-box">
+          <div class="d-flex align-items-center gap-3 flex-wrap w-100 justify-content-between">
+            <div class="d-flex align-items-center gap-3">
+              {% if current_user.avatar %}
+              <img
+                src="{{ url_for('static', filename='avatars/' ~ current_user.avatar) }}"
+                alt="User Avatar"
+              />
+              {% endif %}
+              <div class="user-details text-start">
+                <div class="username">Hello, {{ current_user.username }} 👋</div>
+                <div>Rank: {{ rank if rank is not none else "Unranked" }}</div>
+              </div>
             </div>
+            <a href="{{ url_for('main.logout') }}" class="btn btn-outline-light mt-2 mt-sm-0">
+              Logout
+            </a>
           </div>
         </div>
         {% endif %}
-        <h1 class="display-5 text-white fw-bold text-center">
-          Welcome to Tuross Tipping Comp!
-        </h1>
+
+        <h1 class="display-5 text-white fw-bold">Welcome to Tuross Tipping Comp!</h1>
 
         {% if current_user.is_authenticated %}
-        <p class="text-center">Hello, {{ current_user.username }}!</p>
-
-        <div class="d-flex justify-content-center flex-wrap my-3">
-          <a href="{{ url_for('tip.submit_tip') }}" class="btn btn-primary m-2"
-            >Submit Tips</a
-          >
-          <a href="{{ url_for('tip.view_tips') }}" class="btn btn-primary m-2"
-            >View Tips</a
-          >
-        </div>
-
-        <div class="d-flex justify-content-center flex-wrap my-2">
-          <a href="{{url_for('chat.chat')}}" class="btn btn-outline-light m-2"
-            >Chat</a
-          >
-          <a
-            href="{{ url_for('leaderboard.leaderboard') }}"
-            class="btn btn-outline-light m-2"
-            >Leaderboard</a
-          >
-          <a
-            href="{{ url_for('profile.profile') }}"
-            class="btn btn-outline-light m-2"
-            >Profile</a
-          >
-
+        <div class="btn-group-custom d-flex flex-wrap justify-content-center mt-3">
+          <a href="{{ url_for('tip.submit_tip') }}" class="btn btn-primary">
+            Submit Tips
+          </a>
+          <a href="{{ url_for('tip.view_tips') }}" class="btn btn-primary">
+            View Tips
+          </a>
+          <a href="{{ url_for('chat.chat') }}" class="btn btn-outline-light">
+            Chat
+          </a>
+          <a href="{{ url_for('leaderboard.leaderboard') }}" class="btn btn-outline-light">
+            Leaderboard
+          </a>
+          <a href="{{ url_for('profile.profile') }}" class="btn btn-outline-light">
+            Profile
+          </a>
           {% if current_user.is_admin %}
-            <a href="{{ url_for('admin.admin_dashboard') }}" class="btn btn-warning m-2">
-              Admin
-            </a>
+          <a href="{{ url_for('admin.admin_dashboard') }}" class="btn btn-warning">
+            Admin
+          </a>
           {% endif %}
         </div>
-
-        <div class="d-flex justify-content-center">
-          <a href="{{ url_for('main.logout') }}" class="btn btn-secondary m-2"
-            >Logout</a
-          >
-        </div>
-
         {% else %}
-        <div class="d-flex justify-content-center my-4">
-          <a href="{{ url_for('auth.login') }}" class="btn btn-primary m-2"
-            >Login</a
-          >
-          {# <a href="{{ url_for('auth.register') }}" class="btn btn-primary m-2"
-            >Register</a
-          > #}
+        <div class="btn-group-custom d-flex justify-content-center">
+          <a href="{{ url_for('auth.login') }}" class="btn btn-primary">Login</a>
         </div>
         {% endif %}
       </div>
@@ -245,116 +222,45 @@
         Your Tips & Round {{ round_number }} Fixtures
       </h3>
 
-      {% if fixtures %} {% for fixture in fixtures %}
-      <div class="match-card">
-        <div
-          class="d-flex flex-column flex-md-row justify-content-between align-items-center"
-        >
-          <div class="d-flex align-items-center mb-3 mb-md-0 ps-md-4">
-            <div class="d-flex flex-column align-items-center me-4">
-              <span class="team-label home-label">Home</span>
-              <img
-                src="{{ team_logos[fixture.home_team] }}"
-                alt="{{ fixture.home_team }} logo"
-                class="team-logo {% if tip_map[fixture.match_id] == fixture.home_team %}selected-team{% endif %}"
-              />
-              <span class="team-box home-color mt-2"
-                >{{ fixture.home_team }}</span
-              >
-            </div>
-
-            <div class="px-3 vs-text text-center">vs</div>
-
-            <div class="d-flex flex-column align-items-center ms-4">
-              <span class="team-label home-label">Away</span>
-              <img
-                src="{{ team_logos[fixture.away_team] }}"
-                alt="{{ fixture.away_team }} logo"
-                class="team-logo {% if tip_map[fixture.match_id] == fixture.away_team %}selected-team{% endif %}"
-              />
-              <span class="team-box away-color mt-2"
-                >{{ fixture.away_team }}</span
-              >
-            </div>
-          </div>
-
-          <!-- Date, Day and Time in the middle -->
-          <div class="match-datetime text-center">
-            <span
-              >{{ fixture.date.strftime('%A, %B %d, %Y') }}<br />
-              {{ fixture.time.strftime('%I:%M %p') }}</span
-            >
-          </div>
-
-          <!-- Tip and match detail side-by-side block -->
-          <div class="text-center text-md-end pe-md-4">
-            <div class="d-flex flex-column align-items-md-end">
-              <div
-                class="d-flex align-items-center justify-content-md-end mb-2"
-              >
-                {% if tip_map[fixture.match_id] %}
-                <span class="text-dark fw-semibold me-2">Your Tip:</span>
+      {% if fixtures %}
+        {% for fixture in fixtures %}
+        <div class="match-card">
+          <div class="row align-items-center text-center text-md-start">
+            <div class="col-12 col-md-6 d-flex justify-content-around align-items-center mb-3 mb-md-0">
+              <div class="d-flex flex-column align-items-center">
+                <span class="small">Home</span>
                 <img
-                  src="{{ team_logos[tip_map[fixture.match_id]] }}"
-                  alt="Tip logo"
-                  class="tip-logo"
+                  src="{{ team_logos[fixture.home_team] }}"
+                  alt="{{ fixture.home_team }} logo"
+                  class="team-logo {% if tip_map[fixture.match_id] == fixture.home_team %}selected-team{% endif %}"
                 />
-                {% else %}
-                <span class="text-muted">No tip submitted</span>
-                {% endif %}
+                <span class="team-box home-color mt-2">{{ fixture.home_team }}</span>
               </div>
-
-              <!-- Tip result placeholder -->
-              <div class="mt-1">
-                {% if result_map and result_map[fixture.match_id] is not none %}
-                {% if result_map[fixture.match_id] == tip_map[fixture.match_id]
-                %}
-                <span class="badge bg-success">Correct Tip!</span>
-                {% else %}
-                <span class="badge bg-danger">Wrong Tip</span>
-                {% endif %} {% else %}
-                <span class="badge bg-secondary">Result Pending</span>
-                {% endif %}
+              <div class="vs-text">vs</div>
+              <div class="d-flex flex-column align-items-center">
+                <span class="small">Away</span>
+                <img
+                  src="{{ team_logos[fixture.away_team] }}"
+                  alt="{{ fixture.away_team }} logo"
+                  class="team-logo {% if tip_map[fixture.match_id] == fixture.away_team %}selected-team{% endif %}"
+                />
+                <span class="team-box away-color mt-2">{{ fixture.away_team }}</span>
               </div>
-
-              <!-- Match details button -->
-              <button
-                class="btn btn-sm btn-outline-secondary mt-2 align-self-md-end"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#details-{{ fixture.match_id }}"
-              >
-                Match Details
-              </button>
+            </div>
+            <div class="col-12 col-md-6 match-datetime">
+              {{ fixture.date.strftime('%A, %B %d, %Y') }}<br />
+              {{ fixture.time.strftime('%I:%M %p') }}
             </div>
           </div>
         </div>
-
-        <div class="collapse mt-3" id="details-{{ fixture.match_id }}">
-          <div class="border-top pt-2">
-            <p class="mb-0">
-              <strong>Kickoff:</strong> {{ fixture.time.strftime("%I:%M %p") }}
-            </p>
-            {% if fixture.venue %}
-            <p class="mb-0"><strong>Venue:</strong> {{ fixture.venue }}</p>
-            {% endif %}
-          </div>
-        </div>
-      </div>
-      {% endfor %} {% else %}
-      <p class="text-center">No fixtures available for this round.</p>
-      {% endif %} {% endif %}
+        {% endfor %}
+      {% else %}
+      <p class="text-center text-white">No fixtures available for this round.</p>
+      {% endif %}
+      {% endif %}
     </main>
-
-    <img
-      src="{{ url_for('static', filename='logos/nrl_logo.png') }}"
-      alt="NRL Logo"
-      class="nrl-logo2"
-    />
     <footer>
-      &copy; {{ current_year }} Tuross Tipping Comp. All rights reserved.
+      &copy; {{ now().year }} Tuross Tipping Comp
     </footer>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   </body>
 </html>
