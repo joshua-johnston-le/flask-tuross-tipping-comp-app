@@ -88,6 +88,6 @@ def view_tips():
         users=users,
         tips_by_user=tips_by_user,
         selected_round=selected_round,
-        all_rounds=all_rounds
+        all_rounds=all_rounds,
         fixtures=fixtures
     )
