@@ -45,8 +45,8 @@
                 {% endfor %}
             </td>
             <td>
-                {% if tips_by_user[user.id] %}
-                  {% for tip in tips_by_user[user.id] %}
+                {% if tips_by_user[current_user.id] %}
+                  {% for tip in tips_by_user[current_user.id] %}
                     {% set winning_team = fixtures.get_wining_team(tip.match) %}
                     Match {{ tip.match }} →
                     {{ tip.selected_team }} →
