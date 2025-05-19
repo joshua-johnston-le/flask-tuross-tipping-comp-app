@@ -6,17 +6,17 @@
   <!-- Tabs Navigation -->
   <ul class="nav nav-tabs mb-3" id="adminTab" role="tablist">
     <li class="nav-item" role="presentation">
-      <button class="nav-link active" id="user-tips-tab" data-bs-toggle="tab" data-bs-target="#user-tips" type="button" role="tab">
+      <button class="nav-link active" id="user-tips-tab" data-bs-toggle="tab" data-bs-target="#user-tips" type="button" role="tab" aria-controls="user-tips" aria-selected="true">
         User Tips
       </button>
     </li>
     <li class="nav-item" role="presentation">
-      <button class="nav-link" id="register-tab" data-bs-toggle="tab" data-bs-target="#register" type="button" role="tab">
+      <button class="nav-link" id="register-tab" data-bs-toggle="tab" data-bs-target="#register" type="button" role="tab" aria-controls="register" aria-selected="false">
         Register User
       </button>
     </li>
     <li class="nav-item" role="presentation">
-      <button class="nav-link" id="change-username-tab" data-bs-toggle="tab" data-bs-target="#change-username" type="button" role="tab">
+      <button class="nav-link" id="change-username-tab" data-bs-toggle="tab" data-bs-target="#change-username" type="button" role="tab" aria-controls="change-username" aria-selected="false">
         Change Username
       </button>
     </li>
@@ -26,8 +26,8 @@
   <div class="tab-content" id="adminTabContent">
     <!-- User Tips Tab -->
     <div class="tab-pane fade show active" id="user-tips" role="tabpanel" aria-labelledby="user-tips-tab">
-      <table class="table table-bordered">
-        <thead class="table-light">
+      <table class="table table-bordered text-white">
+        <thead class="table-light text-dark">
           <tr>
             <th>User</th>
             <th>Has Tipped?</th>
@@ -58,17 +58,20 @@
 
     <!-- Register User Tab -->
     <div class="tab-pane fade" id="register" role="tabpanel" aria-labelledby="register-tab">
-      <p class="mt-3">Register User functionality coming soon.</p>
+      <p class="mt-3 text-white">Register User functionality coming soon.</p>
     </div>
 
     <!-- Change Username Tab -->
-    <div class="tab-pane fade" id="change-username" role="tabpanel">
-      {% include "change_username.html" %}
+    <div class="tab-pane fade" id="change-username" role="tabpanel" aria-labelledby="change-username-tab">
+      <div class="mt-3">
+        {% include "change_username.html" %}
+      </div>
     </div>
   </div>
 </div>
+
 <!-- Bootstrap Bundle with Popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-q2my4o5I5w6ZD+1RM6JZ4gMZb97E8X0GulD6hBS4vtd4K6FnNsZtI0jP0VZB4sQD" crossorigin="anonymous"></script>
-
 {% endblock %}
+
 
