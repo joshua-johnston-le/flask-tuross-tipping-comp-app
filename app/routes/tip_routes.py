@@ -80,7 +80,7 @@ def view_tips():
     users = User.query.all()
     tips_by_user = {
         user.id: Tip.query.filter(Tip.user_id == user.id, Tip.match.in_(match_ids)).all()
-        for user in users
+        for user in users if user.username not in ['joshua_johnston', 'testing_db2']
     }
 
     return render_template(
