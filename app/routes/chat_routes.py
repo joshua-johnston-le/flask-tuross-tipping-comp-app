@@ -32,7 +32,7 @@ def is_chat_open(match):
 @login_required
 def chat():
     matches = FixtureFree.query.filter_by(round=find_current_round()).all()
-    selected_match_id = request.args.get("match_id", type=int)
+    selected_match_id = request.args.get("match_id")
     selected_match = (
         FixtureFree.query.filter(FixtureFree.match_id==selected_match_id).first()
         if selected_match_id
