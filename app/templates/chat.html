@@ -178,7 +178,9 @@
             div.classList.add("chat-message");
             div.innerHTML = `
               <img src="${msg.avatar}" alt="avatar" class="chat-avatar" />
-              <span class="chat-timestamp">[${msg.timestamp}]</span>: ${msg.message}
+              <span class="chat-timestamp">
+                ${msg.username.substring(0,5)}[${msg.timestamp}]
+              </span>: ${msg.message}
             `;
             chatBox.appendChild(div);
           });
