@@ -83,7 +83,7 @@ def post_message():
         db.session.add(new_msg)
         db.session.commit()
         
-        avatar_url = f"/static/avatar/{current_user.avatar}"
+        avatar_url = f"/static/avatars/{current_user.avatar}"
         return jsonify({
             "username": current_user.username,
             "avatar": avatar_url,
@@ -104,7 +104,7 @@ def get_messages():
 
     messages = ChatMessage.query.filter_by(match_id=match_id).order_by(ChatMessage.timestamp.asc()).all()
     
-    avatar_url = f"/static/avatar/{msg.user.avatar}"
+    avatar_url = f"/static/avatars/{msg.user.avatar}"
     result = [{
         "username": msg.user.username,
         "avatar": avatar_url,
