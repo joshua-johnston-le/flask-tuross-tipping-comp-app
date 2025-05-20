@@ -69,10 +69,10 @@ def post_message():
     match_id = request.form.get("match_id")
     message = request.form.get("message", "").strip()
 
-    match = FixtureFree.query.get(match_id)
+    match = FixtureFree.query.filter(FixtureFree.match_id==match_id)
     #if not match or not is_chat_open(match):
     #    return jsonify({"error": "Chat is currently closed."}), 403
-
+    print(f"HERE!!! MESSAGE: {message}")
     if message:
         new_msg = ChatMessage(
             user_id=current_user.id,
