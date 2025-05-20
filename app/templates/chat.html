@@ -97,7 +97,7 @@
   
 
   <!-- Tipping Summary -->
-  {% if selected_match %}
+  {#{% if selected_match %}#}
     <div class="match-summary">
       <h4>{{ selected_match.home_team }} vs {{ selected_match.away_team }}</h4>
       <p><strong>Kickoff:</strong> {{ selected_match.time.strftime('%A %I:%M %p') }} (UTC)</p>
@@ -120,7 +120,7 @@
         </div>
       </div>
     </div>
-  {% endif %}
+  {#{% endif %}#}
 
   <!-- Chat Box -->
   <div class="chat-box" id="chat-box">
