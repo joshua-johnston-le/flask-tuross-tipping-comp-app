@@ -38,8 +38,8 @@
   <div class="table-responsive">
     <table class="table table-bordered text-white">
         <colgroup>
-            <col style="width: 30%;">
-            <col style="width: 70%;">
+            <col style="width: 20%;">
+            <col style="width: 80%;">
         </colgroup>
         <thead class="table-light text-dark">
           <tr>
@@ -57,12 +57,12 @@
                   Match {{ tip.match }} → {{ tip.selected_team }} →
                   {% if results_map[tip.match] is not none %}
                     {% if tip.selected_team == results_map[tip.match] %}
-                      ✅ Correct<br>
+                      ✅<br>
                     {% else %}
-                      ❌ Incorrect<br>
+                      ❌<br>
                     {% endif %}
                   {% else %}
-                    Pending<br>
+                    ⏳<br>
                   {% endif %}
                 {% endfor %}
               {% else %}
@@ -82,12 +82,12 @@
                       Match {{ tip.match }} → {{ tip.selected_team }} →
                       {% if results_map[tip.match] is not none %}
                         {% if tip.selected_team == results_map[tip.match] %}
-                          ✅ Correct<br>
+                          ✅<br>
                         {% else %}
-                          ❌ Incorrect<br>
+                          ❌<br>
                         {% endif %}
                       {% else %}
-                        Pending<br>
+                        ⏳<br>
                       {% endif %}
                     {% endfor %}
                   {% else %}
