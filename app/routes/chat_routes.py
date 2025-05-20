@@ -94,7 +94,7 @@ def post_message():
 @login_required
 def get_messages():
     match_id = request.args.get("match_id")
-    match = FixtureFree.query.filter(FixtureFree.match_id=match_id)
+    match = FixtureFree.query.filter(FixtureFree.match_id==match_id)
 
     if not match:
         return jsonify({"error": "Invalid match."}), 400
