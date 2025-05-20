@@ -104,10 +104,9 @@ def get_messages():
 
     messages = ChatMessage.query.filter_by(match_id=match_id).order_by(ChatMessage.timestamp.asc()).all()
     
-    avatar_url = f"/static/avatars/{msg.user.avatar}"
     result = [{
         "username": msg.user.username,
-        "avatar": avatar_url,
+        "avatar": f"/static/avatars/{msg.user.avatar}",
         "message": msg.message,
         "timestamp": msg.timestamp.strftime("%H:%M")
     } for msg in messages]
