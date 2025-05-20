@@ -66,12 +66,12 @@ def chat():
 @chat_bp.route('/chat/post_message', methods=["POST"])
 @login_required
 def post_message():
-    match_id = request.form.get("match_id", type=int)
+    match_id = request.form.get("match_id")
     message = request.form.get("message", "").strip()
 
     match = FixtureFree.query.get(match_id)
-    if not match or not is_chat_open(match):
-        return jsonify({"error": "Chat is currently closed."}), 403
+    #if not match or not is_chat_open(match):
+    #    return jsonify({"error": "Chat is currently closed."}), 403
 
     if message:
         new_msg = ChatMessage(
@@ -93,7 +93,7 @@ def post_message():
 @chat_bp.route('/chat/messages')
 @login_required
 def get_messages():
-    match_id = request.args.get("match_id", type=int)
+    match_id = request.args.get("match_id")
     match = FixtureFree.query.get(match_id)
 
     if not match:
