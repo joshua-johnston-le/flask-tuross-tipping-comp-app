@@ -177,7 +177,7 @@
             const div = document.createElement("div");
             div.classList.add("chat-message");
             div.innerHTML = `
-              <img src="${msg.avatar_url}" alt="avatar" class="chat-avatar" />
+              <img src="${msg.avatar}" alt="avatar" class="chat-avatar" />
               <span class="chat-timestamp">[${msg.timestamp}]</span>: ${msg.message}
             `;
             chatBox.appendChild(div);
