@@ -60,7 +60,7 @@ def chat():
         selected_match=selected_match,
         tipped_users=tipped_users,
         chat_messages=chat_messages,
-        chat_open=chat_open
+        chat_open=True #chat_open
     )
 
 @chat_bp.route('/chat/post_message', methods=["POST"])

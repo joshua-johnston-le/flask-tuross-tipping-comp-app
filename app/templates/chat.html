@@ -88,7 +88,7 @@
       <select name="match_id" id="match_id" onchange="this.form.submit()">
         {% for match in matches %}
           <option value="{{ match.match_id }}" {% if selected_match and match.match_id == selected_match.match_id %}selected{% endif %}>
-            {{ match.home_team }} vs {{ match.away_team }} - {{ match.time.strftime('%A %I:%M %p') }}
+            {{ match.home_team }} vs {{ match.away_team }} - {{ match.date.strftime('%A')}} {{ match.time.strftime('%I:%M %p') }}
           </option>
         {% endfor %}
       </select>
@@ -100,7 +100,7 @@
   {% if selected_match %}
     <div class="match-summary">
       <h4>{{ selected_match.home_team }} vs {{ selected_match.away_team }}</h4>
-      <p><strong>Kickoff:</strong> {{ selected_match.time.strftime('%A %I:%M %p') }} (UTC)</p>
+      <p><strong>Kickoff:</strong> {{selected_match.date.strftime('%A')}} {{ selected_match.time.strftime('%I:%M %p') }}</p>
       <div style="display: flex; justify-content: space-between;">
         <div>
           <strong>Tipped {{ selected_match.home_team }}:</strong>
