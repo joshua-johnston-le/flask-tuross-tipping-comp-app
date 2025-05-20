@@ -179,7 +179,7 @@
             div.innerHTML = `
               <img src="${msg.avatar}" alt="avatar" class="chat-avatar" />
               <span class="chat-timestamp">
-                ${msg.username.substring(0,5)}[${msg.timestamp}]
+                ${msg.username.substring(0,6)} [${msg.timestamp}]
               </span>: ${msg.message}
             `;
             chatBox.appendChild(div);
