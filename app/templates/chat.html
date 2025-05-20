@@ -15,6 +15,15 @@
     background-color: #fafafa;
   }
 
+  .chat-avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    vertical-align: middle;
+    margin-right: 8px;
+    object-fit: cover;
+  }  
+
   .chat-message {
     margin-bottom: 10px;
   }
@@ -167,7 +176,10 @@
           data.messages.forEach(msg => {
             const div = document.createElement("div");
             div.classList.add("chat-message");
-            div.innerHTML = `<strong>${msg.username}</strong> [${msg.timestamp}]: ${msg.message}`;
+            div.innerHTML = `
+              <img src="${msg.avatar_url}" alt="avatar" class="chat-avatar" />
+              <span class="chat-timestamp">[${msg.timestamp}]</span>: ${msg.message}
+            `;
             chatBox.appendChild(div);
           });
           scrollChatToBottom();

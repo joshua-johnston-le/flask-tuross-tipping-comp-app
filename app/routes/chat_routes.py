@@ -84,6 +84,7 @@ def post_message():
         db.session.commit()
         return jsonify({
             "username": current_user.username,
+            "avatar": current_user.avatar,
             "message": new_msg.message,
             "timestamp": new_msg.timestamp.strftime("%H:%M")
         })
@@ -102,6 +103,7 @@ def get_messages():
     messages = ChatMessage.query.filter_by(match_id=match_id).order_by(ChatMessage.timestamp.asc()).all()
     result = [{
         "username": msg.user.username,
+        "avatar": msg.user.avatar,
         "message": msg.message,
         "timestamp": msg.timestamp.strftime("%H:%M")
     } for msg in messages]
