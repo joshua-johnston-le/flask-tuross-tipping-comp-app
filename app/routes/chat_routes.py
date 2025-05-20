@@ -33,7 +33,11 @@ def is_chat_open(match):
 def chat():
     matches = FixtureFree.query.filter_by(round=find_current_round()).all()
     selected_match_id = request.args.get("match_id", type=int)
-    selected_match = FixtureFree.query.filter(FixtureFree.match_id==selected_match_id).first()
+    selected_match = (
+        FixtureFree.query.filter(FixtureFree.match_id==selected_match_id).first()
+        if selected_match_id
+        else matches[0] if matches else None
+    )
     print(f"Selected match ID!!!!!!: {selected_match_id}")
     print(selected_match)
     tipped_users = {}
