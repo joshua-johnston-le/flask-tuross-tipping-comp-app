@@ -92,6 +92,6 @@ def view_tips():
         selected_round=selected_round,
         all_rounds=all_rounds,
         fixtures=fixtures,
-        results_map=results_map.
+        results_map=results_map,
         current_round=current_round
     )
