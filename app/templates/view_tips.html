@@ -78,8 +78,8 @@
                 <td>{{ user.username }}</td>
                 <td>
                   {# ✅ CHANGED: Prevent viewing tips for current round if user hasn't submitted their own #}
-                  {% if selected_round == current_round and not tips_by_user[current_user.id] %}
-                    <em>You must submit your tips for this round to view others.</em>
+                  {% if selected_round == current_round and not after_5_thursday %}
+                    <em>View others tips after 5pm Thursday.</em>
                   {% elif tips_by_user[user.id] %}
                     {% for tip in tips_by_user[user.id] %}
                       Match {{ tip.match }} → {{ tip.selected_team }} →

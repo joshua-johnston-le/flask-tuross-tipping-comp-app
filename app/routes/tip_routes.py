@@ -3,7 +3,7 @@ from flask_login import login_required, current_user
 from app.models import db, Tip, FixtureFree, User
 from app.utils.team_logos import TEAM_LOGOS
 from datetime import date, timedelta
-from app.utils.helper_functions import get_all_rounds
+from app.utils.helper_functions import get_all_rounds, is_past_thursday_5pm_aus
 from app.services.fixtures import find_current_round
 
 tip_bp = Blueprint('tip', __name__)
@@ -82,7 +82,8 @@ def view_tips():
         user.id: Tip.query.filter(Tip.user_id == user.id, Tip.match.in_(match_ids)).all()
         for user in users if user.username not in ['joshua_johnston', 'testing_db2']
     }
-    current_round=find_current_round()
+    after_5_thursday = is_past_thursday_5pm_aus()
+    current_round = get_all_rounds()
     results_map = {match : FixtureFree.get_winning_team(match) for match in match_ids}
     
     return render_template(
@@ -93,5 +94,6 @@ def view_tips():
         all_rounds=all_rounds,
         fixtures=fixtures,
         results_map=results_map,
+        after_5_thursday=after_5_thursday,
         current_round=current_round
     )

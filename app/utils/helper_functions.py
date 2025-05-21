@@ -34,5 +34,17 @@ def get_all_rounds():
     rounds = db.session.query(FixtureFree.round).distinct().order_by(FixtureFree.round).all()
     return [r[0] for r in rounds]
 
-    
-    
+
+def is_past_thursday_5pm_aus():
+    # Set timezone to Australia/Sydney
+    aus_tz = pytz.timezone('Australia/Sydney')
+    now = datetime.now(aus_tz)
+
+    # Get this week's Thursday
+    # weekday(): Monday=0, ..., Sunday=6 → Thursday = 3
+    days_since_thursday = (now.weekday() - 3) % 7
+    this_thursday = now - timedelta(days=days_since_thursday)
+    thursday_5pm = this_thursday.replace(hour=17, minute=0, second=0, microsecond=0)
+
+    # Return True if it's now Thursday 5pm or later
+    return now >= thursday_5pm
