@@ -40,11 +40,13 @@ def is_past_thursday_5pm_aus():
     aus_tz = pytz.timezone('Australia/Sydney')
     now = datetime.now(aus_tz)
 
-    # Get this week's Thursday
-    # weekday(): Monday=0, ..., Sunday=6 → Thursday = 3
-    days_since_thursday = (now.weekday() - 3) % 7
-    this_thursday = now - timedelta(days=days_since_thursday)
-    thursday_5pm = this_thursday.replace(hour=17, minute=0, second=0, microsecond=0)
+    # Find this week's Thursday (Monday=0, ..., Thursday=3)
+    days_until_thursday = (3 - now.weekday()) % 7
+    this_thursday = now + timedelta(days=days_until_thursday)
 
-    # Return True if it's now Thursday 5pm or later
+    # Set time to 5:00pm on Thursday
+    thursday_5pm = this_thursday.replace(hour=17, minute=0, second=0, microsecond=0)
+    print(now)
+    print(thursday_5pm)
+    # Return True if now is after 5:00pm Thursday
     return now >= thursday_5pm
