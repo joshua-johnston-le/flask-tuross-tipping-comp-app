@@ -83,7 +83,7 @@ def view_tips():
         for user in users if user.username not in ['joshua_johnston', 'testing_db2']
     }
     after_5_thursday = is_past_thursday_5pm_aus()
-    current_round = get_all_rounds()
+    current_round = find_current_round()
     results_map = {match : FixtureFree.get_winning_team(match) for match in match_ids}
     
     return render_template(
