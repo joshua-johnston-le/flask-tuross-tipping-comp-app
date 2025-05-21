@@ -26,13 +26,28 @@ def get_free_nrl_fixtures():
         return []
         
 def upsert_free_fixtures():
-    FixtureFree.query.delete()
-    db.session.commit()
+    #FixtureFree.query.delete()
+    #db.session.commit()
     
     fixtures = get_free_nrl_fixtures()
     
+    if not fixtures:
+        print("No fixtures fetched. Abort...")
+        return 
+    
+    existing_fixtures = {
+        f.match_id: f for f in FixtureFree.query.all()
+    }
+    
     for fixture in fixtures:
         #Converting fixtures date string to datetime format
+        match_id = fixture.get("MatchNumber")
+        round = fixture.get("RoundNumber")
+        home_team = fixture.get("HomeTeam")
+        away_team = fixture.get("AwayTeam")
+        home_score = fixture.get("HomeTeamScore")
+        away_score = fixture.get("AwayTeamScore")
+        
         date_str = fixture.get("DateUtc", None)
         if date_str:
             try:
@@ -54,18 +69,34 @@ def upsert_free_fixtures():
             date_part = None
             time_part = None
         
-        new_fixture = FixtureFree(
-            match_id=fixture.get("MatchNumber", None),
-            season=2025,
-            round=fixture.get("RoundNumber",None),
-            home_team=fixture.get("HomeTeam",None),
-            away_team=fixture.get("AwayTeam", None),
-            home_score=fixture.get("HomeTeamScore", None),
-            away_score=fixture.get("AwayTeamScore", None),
-            date=date_part,
-            time=time_part
-        )
-        db.session.add(new_fixture)
+        existing = existing_fixtures.get(str(match_id))
+
+        if existing:
+            updated = False
+            if existing.home_score is None and home_score is not None:
+                existing.home_score = fixture.home_score
+                updated = True
+            if existing.away_score is None and away_score is not None:
+                existing.away_score = fixture.away_score
+                updated = True
+            if updated==True:
+                print(f"updated scores for match: {match_id}")
+        else:
+        
+            new_fixture = FixtureFree(
+                match_id=fixture.get("MatchNumber", None),
+                season=2025,
+                round=fixture.get("RoundNumber",None),
+                home_team=fixture.get("HomeTeam",None),
+                away_team=fixture.get("AwayTeam", None),
+                home_score=fixture.get("HomeTeamScore", None),
+                away_score=fixture.get("AwayTeamScore", None),
+                date=date_part,
+                time=time_part
+            )
+            db.session.add(new_fixture)
+            print(f"Inserted new fixture {match_id}")
+            
 
     db.session.commit()
 
