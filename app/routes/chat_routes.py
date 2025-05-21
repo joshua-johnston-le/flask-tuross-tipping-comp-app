@@ -5,6 +5,7 @@ from flask_login import login_required, current_user
 from datetime import datetime, timedelta, time, date
 from app.models import db, FixtureFree, Tip, User, ChatMessage
 from app.services.fixtures import find_current_round
+from app.utils.helper_functions import is_past_thursday_5pm_aus
 import pytz
 
 chat_bp = Blueprint('chat', __name__)
@@ -60,7 +61,8 @@ def chat():
         selected_match=selected_match,
         tipped_users=tipped_users,
         chat_messages=chat_messages,
-        chat_open=True #chat_open
+        chat_open=True, #chat_open
+        after_5pm_thurs=is_past_thursday_5pm_aus()
     )
 
 @chat_bp.route('/chat/post_message', methods=["POST"])

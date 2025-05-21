@@ -111,6 +111,9 @@
       <h4>{{ selected_match.home_team }} vs {{ selected_match.away_team }}</h4>
       <p><strong>Kickoff:</strong> {{selected_match.date.strftime('%A')}} {{ selected_match.time.strftime('%I:%M %p') }}</p>
       <div style="display: flex; justify-content: space-between;">
+        {% if not after_5pm_thurs %}
+          Users tips viewable after 5pm Thurs
+        {% else %}
         <div>
           <strong>Tipped {{ selected_match.home_team }}:</strong>
           <ul>
@@ -127,6 +130,7 @@
             {% endfor %}
           </ul>
         </div>
+        {% endif %}
       </div>
     </div>
   {% endif %}
