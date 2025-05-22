@@ -28,7 +28,13 @@ def get_user_rank(user_id):
     return None
 
 def has_user_submitted_tips(user_id):
-    pass
+    match_ids = [f.match_id for f in FixtureFree.query.filter_by(round=find_current_round()).all()]
+    tips = Tip.query.filter(Tip.user_id==user_id, Tip.match.in_(match_ids)).all()
+    
+    if len(match_ids)==len(set(t.match_id for t in tips)):
+        return True
+    else:
+        return False
 
 def get_all_rounds():
     rounds = db.session.query(FixtureFree.round).distinct().order_by(FixtureFree.round).all()
