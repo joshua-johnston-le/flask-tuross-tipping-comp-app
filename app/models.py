@@ -11,7 +11,7 @@ class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(150), unique=True, nullable=False)
     password_hash = db.Column(db.String(300), nullable=False)
-    phone_number = db.Column(db.String(20), nullable=True),
+    phone_number = db.Column(db.String(20), nullable=True)
     avatar = db.Column(db.String(120), nullable=False, default="default.jpg")
     is_admin = db.Column(db.Boolean, default=False)
 
