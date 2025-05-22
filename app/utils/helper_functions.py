@@ -6,6 +6,7 @@ from app.models import Fixture, FixtureFree, db, User, UserTipStats, Tip
 from app import create_app, db
 from datetime import datetime, date, timedelta
 import pytz
+from app.services.fixtures import find_current_round
 
 def get_user_rank(user_id):
     # Fetch leaderboard data: user_id and total successful tips
