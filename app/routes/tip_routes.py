@@ -94,6 +94,6 @@ def view_tips():
         all_rounds=all_rounds,
         fixtures=fixtures,
         results_map=results_map,
-        after_5_thursday=after_5_thursday,
+        after_5_thursday=True #after_5_thursday,
         current_round=current_round
     )
