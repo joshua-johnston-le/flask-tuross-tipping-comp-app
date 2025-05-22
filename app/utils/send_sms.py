@@ -33,7 +33,13 @@ if __name__ == '__main__':
         All participants who havnt submited by then will automatically be given the home teams 
         '''
         users = User.query.all()
+        havnt_submitted = []
         for user in users:
             if not has_user_submitted_tips(user.id):    
                 send_msg(user.phone_number,msg)
                 print(f"Message reminder sent to: {user.username}")
+                havnt_submitted.append(user.username)
+        send_msg('488534484',f'reminders where sent to: {", ".join(havnt_submitted)}')        
+        
+        
+        
