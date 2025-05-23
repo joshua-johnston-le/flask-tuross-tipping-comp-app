@@ -20,14 +20,24 @@
     <table class="table table-bordered text-white">
         <thead class="table-light text-dark">
             <tr>
-                <th>Round Results</th>
+                <th>Match</th>
+                <th>Results</th>
             </tr>
         </thead>
         <tbody>
             <tr>
                 <td>
                     {% for fixture in fixtures %}
-                        Match {{ fixture.match_id }}: {{ fixture.home_team }} ({{ fixture.home_score }}) vs {{ fixture.away_team }} ({{ fixture.away_score }})<br>
+                      {{ fixture.home_team }} vs {{ fixture.away_team }}<br>
+                    {% endfor %}
+                </td>
+                <td>
+                    {% for fixture in fixtures %}
+                      {% if fixture.home_score %}
+                        {{ fixture.home_score}} - {{ fixture.away_score }}
+                      {% else %}
+                        ⏳
+                      {% endif %}
                     {% endfor %}
                 </td>
             </tr>
