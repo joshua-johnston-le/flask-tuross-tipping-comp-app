@@ -74,10 +74,10 @@ def upsert_free_fixtures():
         if existing:
             updated = False
             if existing.home_score is None and home_score is not None:
-                existing.home_score = fixture.home_score
+                existing.home_score = home_score
                 updated = True
             if existing.away_score is None and away_score is not None:
-                existing.away_score = fixture.away_score
+                existing.away_score = away_score
                 updated = True
             if updated==True:
                 print(f"updated scores for match: {match_id}")
