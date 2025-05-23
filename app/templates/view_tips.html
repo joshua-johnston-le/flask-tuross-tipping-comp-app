@@ -54,7 +54,7 @@
             <td>
               {% if tips_by_user[current_user.id] %}
                 {% for tip in tips_by_user[current_user.id] %}
-                  Match {{ tip.match }} → {{ tip.selected_team }} →
+                  {{ tip.selected_team }} →
                   {% if results_map[tip.match] is not none %}
                     {% if tip.selected_team == results_map[tip.match] %}
                       ✅<br>
@@ -82,7 +82,7 @@
                     <em>View others tips after 5pm Thursday.</em>
                   {% elif tips_by_user[user.id] %}
                     {% for tip in tips_by_user[user.id] %}
-                      Match {{ tip.match }} → {{ tip.selected_team }} →
+                      {{ tip.selected_team }} →
                       {% if results_map[tip.match] is not none %}
                         {% if tip.selected_team == results_map[tip.match] %}
                           ✅<br>
