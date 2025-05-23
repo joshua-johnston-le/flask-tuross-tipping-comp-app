@@ -74,7 +74,7 @@ def view_tips():
     if not selected_round:
         selected_round = find_current_round()
 
-    fixtures = FixtureFree.query.filter_by(round=selected_round).all()
+    fixtures = FixtureFree.query.filter_by(round=selected_round).order_by(FixtureFree.match_id.asc()).all()
     match_ids = [f.match_id for f in fixtures]
 
     users = User.query.filter(~User.username.in_(['joshua_johnston','testing_db2'])).all()
@@ -83,7 +83,6 @@ def view_tips():
         for user in users if user.username not in ['joshua_johnston', 'testing_db2']
     }
     after_5_thursday = is_past_thursday_5pm_aus()
-    current_round = find_current_round()
     results_map = {match : FixtureFree.get_winning_team(match) for match in match_ids}
     
     return render_template(
@@ -95,5 +94,5 @@ def view_tips():
         fixtures=fixtures,
         results_map=results_map,
         after_5_thursday=True, #after_5_thursday,
-        current_round=current_round
+        current_round=find_current_round()
     )

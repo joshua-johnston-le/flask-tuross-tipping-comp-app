@@ -34,9 +34,9 @@
                 <td>
                     {% for fixture in fixtures %}
                       {% if fixture.home_score %}
-                        {{ fixture.home_score}} - {{ fixture.away_score }}
+                        {{ fixture.home_score}} - {{ fixture.away_score }}<br>
                       {% else %}
-                        ⏳
+                        ⏳<br>
                       {% endif %}
                     {% endfor %}
                 </td>
