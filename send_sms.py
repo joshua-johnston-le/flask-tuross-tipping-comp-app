@@ -36,7 +36,7 @@ if __name__ == '__main__':
         havnt_submitted = []
         for user in users:
             if (not has_user_submitted_tips(user.id)) and (user.phone_number is not None):
-                #send_msg(user.phone_number,msg)
+                send_msg(user.phone_number,msg)
                 print(f"Message reminder sent to:\n {user.username}")
                 havnt_submitted.append(user.username)
         recipients = "\n ".join(havnt_submitted)
