@@ -39,7 +39,7 @@ if __name__ == '__main__':
                 #send_msg(user.phone_number,msg)
                 print(f"Message reminder sent to:\n {user.username}")
                 havnt_submitted.append(user.username)
-        send_msg('488534484',f'reminders where sent to: {"\n ".join(havnt_submitted)}')
+        send_msg('488534484',f'reminders where sent to: {"\\n ".join(havnt_submitted)}')
         
     
         
