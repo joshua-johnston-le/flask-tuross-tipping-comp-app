@@ -46,7 +46,7 @@ def is_past_thursday_5pm_aus():
     now = datetime.now(pytz.timezone('Australia/Sydney'))
     
     # Calculate the start of the week (Monday at 12:01 AM)
-    monday = today - timedelta(days=today.weekday())  # Get the previous Monday
+    monday = now - timedelta(days=now.weekday())  # Get the previous Monday
     monday = monday.replace(hour=0, minute=1, second=0, microsecond=0)
 
     # Calculate the end of the week (Sunday at 11:59 PM)
