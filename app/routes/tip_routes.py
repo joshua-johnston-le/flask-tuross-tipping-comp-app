@@ -82,7 +82,6 @@ def view_tips():
         user.id: Tip.query.filter(Tip.user_id == user.id, Tip.match.in_(match_ids)).all()
         for user in users if user.username not in ['joshua_johnston', 'testing_db2']
     }
-    after_5_thursday = is_past_thursday_5pm_aus()
     results_map = {match : FixtureFree.get_winning_team(match) for match in match_ids}
     
     return render_template(
@@ -93,6 +92,6 @@ def view_tips():
         all_rounds=all_rounds,
         fixtures=fixtures,
         results_map=results_map,
-        after_5_thursday=False, #after_5_thursday,
+        after_5_thursday=is_past_thursday_5pm_aus(), #dictate if user can see others tips
         current_round=find_current_round()
     )

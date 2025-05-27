@@ -43,17 +43,25 @@ def get_all_rounds():
 
 
 def is_past_thursday_5pm_aus():
-    # Set timezone to Australia/Sydney
-    aus_tz = pytz.timezone('Australia/Sydney')
-    now = datetime.now(aus_tz)
+    now = datetime.now(pytz.timezone('Australia/Sydney'))
+    
+    # Calculate the start of the week (Monday at 12:01 AM)
+    monday = today - timedelta(days=today.weekday())  # Get the previous Monday
+    monday = monday.replace(hour=0, minute=1, second=0, microsecond=0)
 
-    # Find this week's Thursday (Monday=0, ..., Thursday=3)
+    # Calculate the end of the week (Sunday at 11:59 PM)
+    sunday = monday + timedelta(days=6)  # Get the next Sunday
+    sunday = sunday.replace(hour=23, minute=59, second=59, microsecond=999999)
+
     days_until_thursday = (3 - now.weekday()) % 7
     this_thursday = now + timedelta(days=days_until_thursday)
 
     # Set time to 5:00pm on Thursday
     thursday_5pm = this_thursday.replace(hour=17, minute=0, second=0, microsecond=0)
-    print(now)
-    print(thursday_5pm)
-    # Return True if now is after 5:00pm Thursday
-    return now >= thursday_5pm
+
+    if monday <= now <= thursday_5pm:
+        return False
+    elif thursday_5pm <= now <= sunday:
+        return True 
+    else:
+        return False
