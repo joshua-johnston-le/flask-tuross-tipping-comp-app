@@ -62,7 +62,7 @@ def chat():
         tipped_users=tipped_users,
         chat_messages=chat_messages,
         chat_open=True, #chat_open
-        after_5pm_thurs=is_past_thursday_5pm_aus()
+        after_5pm_thurs=True #is_past_thursday_5pm_aus()
     )
 
 @chat_bp.route('/chat/post_message', methods=["POST"])
