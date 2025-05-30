@@ -54,8 +54,8 @@ def is_past_thursday_5pm_aus():
     sunday = sunday.replace(hour=23, minute=59, second=59, microsecond=999999)
 
     days_until_thursday = (3 - now.weekday()) % 7
-    this_thursday = now - timedelta(days=now.weekday() - 3) if now.weekday() >= 3 else now - timedelta(days=now.weekday() + 4)
-    this_thursday_at_5pm = this_thursday.replace(hour=17, minute=0, second=0, microsecond=0)
+    thursday = now - timedelta(days=now.weekday() - 3) if now.weekday() >= 3 else now - timedelta(days=now.weekday() + 4)
+    thursday_5pm = thursday.replace(hour=17, minute=0, second=0, microsecond=0)
 
 
     if monday <= now <= thursday_5pm:
