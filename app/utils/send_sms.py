@@ -1,8 +1,8 @@
 import os
 from twilio.rest import Client
 from dotenv import load_dotenv
-from app/utils/helper_functions import has_user_submitted_tips
-from app/models import User
+from app.utils.helper_functions import has_user_submitted_tips
+from app.models import User
 from app import create_app, db
 
 # Load .env from root directory
