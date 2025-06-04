@@ -15,10 +15,7 @@ def submit_tip():
     monday = today - timedelta(days=today.weekday())
     sunday = monday + timedelta(days=6)
 
-    fixtures = FixtureFree.query.filter(
-        FixtureFree.date >= monday,
-        FixtureFree.date <= sunday
-    ).all()
+    fixtures = FixtureFree.query.filter(FixtureFree.round==find_current_round()).all()
     
     match_ids = [f.match_id for f in fixtures]  # ✅ FIXED: use f.id not f.match_id
     
