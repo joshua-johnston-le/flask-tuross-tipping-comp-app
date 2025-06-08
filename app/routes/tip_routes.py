@@ -89,6 +89,6 @@ def view_tips():
         all_rounds=all_rounds,
         fixtures=fixtures,
         results_map=results_map,
-        after_5_thursday=is_past_thursday_5pm_aus(), #dictate if user can see others tips
+        after_5_thursday=True, #is_past_thursday_5pm_aus(), #dictate if user can see others tips
         current_round=find_current_round()
     )
