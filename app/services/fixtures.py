@@ -113,7 +113,7 @@ def find_current_round():
                      .first()
                      )
     if current_round:
-        return current_round[0]
+        return 15 #current_round[0]
     else:
         print("Current round returned empty")
         return None
