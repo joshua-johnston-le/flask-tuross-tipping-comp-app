@@ -12,8 +12,7 @@ leaderboard_bp = Blueprint('leaderboard', __name__)
 @leaderboard_bp.route("/leaderboard", methods=["GET","POST"])
 @login_required
 def leaderboard():
-    # Aggregate total successful tips per user
-    leaderboard_data = (
+    aggregated_data = (
         db.session.query(
             User.username,
             db.func.sum(UserTipStats.successful_tips).label("total_success"),
@@ -22,7 +21,20 @@ def leaderboard():
         .join(User, User.id == UserTipStats.user_id)
         .filter(~User.username.in_(['joshua_johnston','testing_db2']))
         .group_by(User.username)
-        .order_by(db.desc("total_success"))  # Sort by success descending
+        .subquery()
+    )
+    
+    leaderboard_data = (
+        db.session.query(
+            aggregated_data.c.username,
+            aggregated_data.c.total_success,
+            aggregated_data.c.total_pending,
+            over(
+                func.rank(),
+                order_by=db.desc(aggregated_data.c.total_success)
+            ).label("rank")
+        )
+        .order_by(db.asc("rank"))
         .all()
     )
     

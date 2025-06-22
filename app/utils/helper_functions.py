@@ -8,25 +8,41 @@ from datetime import datetime, date, timedelta
 import pytz
 from app.services.fixtures import find_current_round
 
-def get_user_rank(user_id):
-    # Fetch leaderboard data: user_id and total successful tips
-    leaderboard_data = (
+def get_user_rank(username):
+    aggregated_data = (
         db.session.query(
-            User.id.label("user_id"),
-            db.func.sum(UserTipStats.successful_tips).label("total_success")
+            User.username,
+            db.func.sum(UserTipStats.successful_tips).label("total_success"),
+            db.func.sum(UserTipStats.pending_tips).label("total_pending")
         )
         .join(User, User.id == UserTipStats.user_id)
-        .group_by(User.id)
-        .order_by(db.desc("total_success"))
+        .filter(~User.username.in_(['joshua_johnston','testing_db2']))
+        .group_by(User.username)
+        .subquery()
+    )
+    
+    leaderboard_data = (
+        db.session.query(
+            aggregated_data.c.username,
+            aggregated_data.c.total_success,
+            aggregated_data.c.total_pending,
+            over(
+                func.rank(),
+                order_by=db.desc(aggregated_data.c.total_success)
+            ).label("rank")
+        )
+        .order_by(db.asc("rank"))
         .all()
     )
 
     # Iterate through sorted leaderboard to find rank
     for idx, row in enumerate(leaderboard_data, start=1):
-        if row.user_id == user_id:
-            return idx  # Rank starts at 1
+        if row.username == username:
+            return row.rank  # Rank starts at 1
 
     return None
+
+    
 
 def has_user_submitted_tips(user_id):
     match_ids = [f.match_id for f in FixtureFree.query.filter_by(round=find_current_round()).all()]

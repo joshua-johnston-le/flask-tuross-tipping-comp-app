@@ -18,7 +18,7 @@ def home():
     rank = None
     tips = []
     if current_user.is_authenticated:
-        rank = get_user_rank(current_user.id)
+        rank = get_user_rank(current_user.username)
         tips = Tip.query.filter(Tip.user_id==current_user.id, Tip.match.in_(match_ids)).all()
     tip_map = {tip.match: tip.selected_team for tip in tips}
     result_map = {tip.match: FixtureFree.get_winning_team(tip.match) for tip in tips}
