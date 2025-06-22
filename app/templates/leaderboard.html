@@ -40,7 +40,7 @@
             <tbody>
                 {% for row in leaderboard_data %}
                 <tr {% if current_user.username == row.username %}class="table-success"{% endif %}>
-                    <td>{{ loop.index }}</td>
+                    <td>{{ row.rank }}</td>
                     <td>{{ row.username }}</td>
                     <td>{{ row.total_success }}</td>
                     <td>{{ row.total_pending }}</td>
