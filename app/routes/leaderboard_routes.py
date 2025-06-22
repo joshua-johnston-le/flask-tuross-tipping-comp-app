@@ -30,7 +30,7 @@ def leaderboard():
             aggregated_data.c.total_success,
             aggregated_data.c.total_pending,
             over(
-                func.rank(),
+                func.dense_rank(),
                 order_by=db.desc(aggregated_data.c.total_success)
             ).label("rank")
         )
