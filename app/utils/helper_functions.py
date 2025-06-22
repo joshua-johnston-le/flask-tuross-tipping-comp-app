@@ -7,6 +7,7 @@ from app import create_app, db
 from datetime import datetime, date, timedelta
 import pytz
 from app.services.fixtures import find_current_round
+from sqlalchemy import func, over
 
 def get_user_rank(username):
     aggregated_data = (
